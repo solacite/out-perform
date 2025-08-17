@@ -1,0 +1,93 @@
+[gd_scene load_steps=18 format=3 uid="uid://b6ydsimjiibv"]
+
+[ext_resource type="Texture2D" uid="uid://dlxhy0u72kmg5" path="res://assets/background/background.png" id="1_fu7sn"]
+[ext_resource type="Script" uid="uid://bvmhmfcwdjlc5" path="res://parallax_background.gd" id="1_jix8l"]
+[ext_resource type="Texture2D" uid="uid://gogmgg5d1kys" path="res://assets/background/stage.png" id="2_jix8l"]
+[ext_resource type="Texture2D" uid="uid://bw5ttfgriejh8" path="res://assets/background/audience.png" id="3_glbon"]
+[ext_resource type="Texture2D" uid="uid://b37a7bipw3knd" path="res://assets/background/title.png" id="5_glbon"]
+[ext_resource type="Texture2D" uid="uid://b0dynev0j534g" path="res://assets/background/play.png" id="6_nlkkf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nlkkf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qe12f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8qtwp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dy7ct"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0o4t1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0k4wn"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nlkkf"]
+texture = ExtResource("6_nlkkf")
+region_rect = Rect2(1293.92, 843.41, 317.641, 305.949)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iotk1"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8qtwp"]
+texture = ExtResource("6_nlkkf")
+region_rect = Rect2(1293.92, 843.41, 317.641, 305.949)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cm266"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qe12f"]
+texture = ExtResource("6_nlkkf")
+region_rect = Rect2(1293.92, 843.41, 317.641, 305.949)
+
+[node name="Main" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+script = ExtResource("1_jix8l")
+
+[node name="Background" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.25, 0.25)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Background"]
+position = Vector2(558, 310)
+scale = Vector2(0.497093, 0.397166)
+texture = ExtResource("1_fu7sn")
+
+[node name="Stage" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.8, 0.8)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Stage"]
+position = Vector2(565, 279.75)
+scale = Vector2(0.459847, 0.359738)
+texture = ExtResource("2_jix8l")
+
+[node name="People" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(1.5, 1.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/People"]
+position = Vector2(571, 211)
+scale = Vector2(0.501272, 0.45797)
+texture = ExtResource("3_glbon")
+
+[node name="Title" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Title"]
+position = Vector2(578, 380)
+scale = Vector2(0.46657, 0.426841)
+texture = ExtResource("5_glbon")
+
+[node name="Play" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 0.5)
+
+[node name="Button" type="Button" parent="ParallaxBackground/Play"]
+offset_left = 539.0
+offset_top = 275.0
+offset_right = 648.0
+offset_bottom = 379.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nlkkf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_qe12f")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8qtwp")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_dy7ct")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_0o4t1")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_0k4wn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_nlkkf")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_iotk1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_8qtwp")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_cm266")
+theme_override_styles/normal = SubResource("StyleBoxTexture_qe12f")
