@@ -1,0 +1,100 @@
+[gd_scene load_steps=15 format=3 uid="uid://dmt5xkn0x250c"]
+
+[ext_resource type="Script" uid="uid://bvmhmfcwdjlc5" path="res://parallax_background.gd" id="1_xuee5"]
+[ext_resource type="Texture2D" uid="uid://dlxhy0u72kmg5" path="res://assets/background/background.png" id="2_smepj"]
+[ext_resource type="Texture2D" uid="uid://gogmgg5d1kys" path="res://assets/background/stage.png" id="3_cbffv"]
+[ext_resource type="Script" uid="uid://cychjmce76eea" path="res://character_body_2d.gd" id="4_0m7cd"]
+[ext_resource type="Texture2D" uid="uid://bw5ttfgriejh8" path="res://assets/background/audience.png" id="4_fbudy"]
+[ext_resource type="Texture2D" uid="uid://klhqm36e5ksq" path="res://assets/player/left.png" id="5_3n40r"]
+[ext_resource type="Texture2D" uid="uid://18sx0m5y8yaa" path="res://assets/player/idle_down.png" id="5_cbffv"]
+[ext_resource type="Texture2D" uid="uid://ck12encwemhiu" path="res://assets/player/idle_up.png" id="5_smepj"]
+[ext_resource type="Texture2D" uid="uid://cxrpp3143lhb7" path="res://assets/player/right.png" id="6_45aep"]
+[ext_resource type="Texture2D" uid="uid://hyvronwsn3ec" path="res://assets/player/up.png" id="7_tyrfw"]
+[ext_resource type="Texture2D" uid="uid://dw2o1t8bbdf88" path="res://assets/player/down.png" id="8_eod45"]
+
+[sub_resource type="Animation" id="Animation_cbffv"]
+resource_name = "idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.31),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("5_smepj"), ExtResource("5_cbffv")]
+}
+
+[sub_resource type="Animation" id="Animation_fbudy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_smepj")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fbudy"]
+_data = {
+&"RESET": SubResource("Animation_fbudy"),
+&"idle": SubResource("Animation_cbffv")
+}
+
+[node name="Main" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+script = ExtResource("1_xuee5")
+
+[node name="Background" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.25, 0.25)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Background"]
+position = Vector2(558, 310)
+scale = Vector2(0.497093, 0.397166)
+texture = ExtResource("2_smepj")
+
+[node name="Stage" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.8, 0.8)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Stage"]
+position = Vector2(565, 279.75)
+scale = Vector2(0.459847, 0.359738)
+texture = ExtResource("3_cbffv")
+
+[node name="Player" type="ParallaxLayer" parent="ParallaxBackground/Stage"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="ParallaxBackground/Stage/Player"]
+script = ExtResource("4_0m7cd")
+idle_texture = ExtResource("5_smepj")
+left_texture = ExtResource("5_3n40r")
+right_texture = ExtResource("6_45aep")
+up_texture = ExtResource("7_tyrfw")
+down_texture = ExtResource("8_eod45")
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Stage/Player/CharacterBody2D"]
+position = Vector2(201, 273)
+scale = Vector2(0.297367, 0.302943)
+texture = ExtResource("5_smepj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ParallaxBackground/Stage/Player/CharacterBody2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_fbudy")
+}
+
+[node name="People" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(1.5, 1.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/People"]
+position = Vector2(571, 211)
+scale = Vector2(0.501272, 0.45797)
+texture = ExtResource("4_fbudy")
