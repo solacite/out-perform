@@ -1,11 +1,11 @@
 [gd_scene load_steps=18 format=3 uid="uid://b6ydsimjiibv"]
 
-[ext_resource type="Texture2D" uid="uid://dlxhy0u72kmg5" path="res://assets/background/background.png" id="1_fu7sn"]
-[ext_resource type="Script" uid="uid://bvmhmfcwdjlc5" path="res://parallax_background.gd" id="1_jix8l"]
-[ext_resource type="Texture2D" uid="uid://gogmgg5d1kys" path="res://assets/background/stage.png" id="2_jix8l"]
-[ext_resource type="Texture2D" uid="uid://bw5ttfgriejh8" path="res://assets/background/audience.png" id="3_glbon"]
-[ext_resource type="Texture2D" uid="uid://b37a7bipw3knd" path="res://assets/background/title.png" id="5_glbon"]
-[ext_resource type="Texture2D" uid="uid://b0dynev0j534g" path="res://assets/background/play.png" id="6_nlkkf"]
+[ext_resource type="Script" uid="uid://bvmhmfcwdjlc5" path="res://parallax_background.gd" id="1_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://dlxhy0u72kmg5" path="res://assets/background/background.png" id="2_oa1go"]
+[ext_resource type="Texture2D" uid="uid://gogmgg5d1kys" path="res://assets/background/stage.png" id="3_tbmy8"]
+[ext_resource type="Texture2D" uid="uid://bw5ttfgriejh8" path="res://assets/background/audience.png" id="4_jk1qb"]
+[ext_resource type="Texture2D" uid="uid://b37a7bipw3knd" path="res://assets/background/title.png" id="5_5dd4i"]
+[ext_resource type="Texture2D" uid="uid://b0dynev0j534g" path="res://assets/background/play.png" id="6_lgwnu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nlkkf"]
 
@@ -20,25 +20,25 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0k4wn"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nlkkf"]
-texture = ExtResource("6_nlkkf")
+texture = ExtResource("6_lgwnu")
 region_rect = Rect2(1293.92, 843.41, 317.641, 305.949)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iotk1"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8qtwp"]
-texture = ExtResource("6_nlkkf")
+texture = ExtResource("6_lgwnu")
 region_rect = Rect2(1293.92, 843.41, 317.641, 305.949)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cm266"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qe12f"]
-texture = ExtResource("6_nlkkf")
+texture = ExtResource("6_lgwnu")
 region_rect = Rect2(1293.92, 843.41, 317.641, 305.949)
 
 [node name="Main" type="Node2D"]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-script = ExtResource("1_jix8l")
+script = ExtResource("1_rtw2f")
 
 [node name="Background" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.25, 0.25)
@@ -46,7 +46,7 @@ motion_scale = Vector2(0.25, 0.25)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Background"]
 position = Vector2(558, 310)
 scale = Vector2(0.497093, 0.397166)
-texture = ExtResource("1_fu7sn")
+texture = ExtResource("2_oa1go")
 
 [node name="Stage" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.8, 0.8)
@@ -54,7 +54,7 @@ motion_scale = Vector2(0.8, 0.8)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Stage"]
 position = Vector2(565, 279.75)
 scale = Vector2(0.459847, 0.359738)
-texture = ExtResource("2_jix8l")
+texture = ExtResource("3_tbmy8")
 
 [node name="People" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(1.5, 1.5)
@@ -62,7 +62,7 @@ motion_scale = Vector2(1.5, 1.5)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/People"]
 position = Vector2(571, 211)
 scale = Vector2(0.501272, 0.45797)
-texture = ExtResource("3_glbon")
+texture = ExtResource("4_jk1qb")
 
 [node name="Title" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.5, 0.5)
@@ -70,7 +70,7 @@ motion_scale = Vector2(0.5, 0.5)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Title"]
 position = Vector2(578, 380)
 scale = Vector2(0.46657, 0.426841)
-texture = ExtResource("5_glbon")
+texture = ExtResource("5_5dd4i")
 
 [node name="Play" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.5, 0.5)

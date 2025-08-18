@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://du21ia4sbgucn"
-path="res://.godot/imported/face.png-19a087fc36df9f5844df69f95f0f9e53.ctex"
+uid="uid://dceosbao7bity"
+path="res://.godot/imported/chat_box.png-61d747b9ecaedc88e0c0ed6f1239154c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/face.png"
-dest_files=["res://.godot/imported/face.png-19a087fc36df9f5844df69f95f0f9e53.ctex"]
+source_file="res://assets/dialogue/chat_box.png"
+dest_files=["res://.godot/imported/chat_box.png-61d747b9ecaedc88e0c0ed6f1239154c.ctex"]
 
 [params]
 
