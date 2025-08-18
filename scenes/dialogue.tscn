@@ -1,39 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://co3urqjbjfgdu"]
+[gd_scene load_steps=5 format=3 uid="uid://co3urqjbjfgdu"]
 
-[ext_resource type="Texture2D" uid="uid://dceosbao7bity" path="res://assets/dialogue/chat_box.png" id="1_jwyou"]
-[ext_resource type="Texture2D" uid="uid://du21ia4sbgucn" path="res://assets/dialogue/face.png" id="2_3n4vj"]
+[ext_resource type="Texture2D" uid="uid://dkjigos81r7bp" path="res://assets/dialogue/border_chat_box.png" id="1_bfpow"]
 [ext_resource type="FontFile" uid="uid://3npgvibwus8" path="res://fonts/FingerPaint-Regular.ttf" id="3_bfpow"]
+[ext_resource type="Script" uid="uid://duhl2a0pjaq27" path="res://scenes/dialogue.gd" id="3_fyky8"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fyky8"]
 
 [node name="Main" type="Node2D"]
 
-[node name="Background" type="Panel" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 40.0
 offset_bottom = 40.0
+scale = Vector2(29.1945, 16.8915)
+color = Color(0.921569, 0.913725, 0.913725, 1)
 
 [node name="Chat Box" type="TextureRect" parent="."]
+material = SubResource("CanvasItemMaterial_fyky8")
 offset_left = -122.0
 offset_top = 229.0
 offset_right = 2630.0
 offset_bottom = 2293.0
 scale = Vector2(0.5009, 0.423843)
-texture = ExtResource("1_jwyou")
-
-[node name="Player Face" type="TextureRect" parent="."]
-offset_left = -167.0
-offset_top = 104.0
-offset_right = 2585.0
-offset_bottom = 2168.0
-scale = Vector2(0.233394, 0.255536)
-texture = ExtResource("2_3n4vj")
+texture = ExtResource("1_bfpow")
 
 [node name="Dialogue" type="RichTextLabel" parent="."]
-offset_left = 325.0
-offset_top = 395.0
-offset_right = 925.0
-offset_bottom = 617.0
-theme_override_colors/default_color = Color(0, 0, 0, 1)
+offset_left = 138.0
+offset_top = 393.0
+offset_right = 1013.0
+offset_bottom = 615.0
+theme_override_colors/default_color = Color(0.158472, 0.158472, 0.158472, 1)
 theme_override_colors/selection_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("3_bfpow")
 theme_override_font_sizes/normal_font_size = 50
 text = "ahhhhhhh"
 fit_content = true
+script = ExtResource("3_fyky8")
