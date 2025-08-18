@@ -12,3 +12,6 @@ func _process(delta):
 	var target_offset = Vector2(offset_x * parallax_strength, 0)
 	
 	scroll_offset = scroll_offset.lerp(target_offset, smoothing * delta)
+
+func _on_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/dialogue.tscn")

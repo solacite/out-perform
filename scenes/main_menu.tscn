@@ -91,3 +91,5 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_iotk1")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_8qtwp")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_cm266")
 theme_override_styles/normal = SubResource("StyleBoxTexture_qe12f")
+
+[connection signal="pressed" from="ParallaxBackground/Play/Button" to="ParallaxBackground" method="_on_button_pressed"]
