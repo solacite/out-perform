@@ -1,7 +1,7 @@
 extends CanvasLayer
 
-@export var streak_textures: Array[Texture2D] = []  # Keep it empty here
-@export var num_streaks: int = 15
+@export var streak_textures: Array[Texture2D] = []
+@export var num_streaks: int = 8
 var is_transitioning: bool = false
 
 func _ready():
@@ -14,49 +14,36 @@ func _ready():
 		load("res://assets/streaks/streak5.png")
 	]
 
+func spawn_paint_wave():
+	var screen_size = get_viewport().get_visible_rect().size
+	
+	for i in num_streaks:
+		var streak = Sprite2D.new()
+		add_child(streak)
+		
+		if not streak_textures.is_empty():
+			streak.texture = streak_textures[i % streak_textures.size()]
+		
+		streak.scale = Vector2(1.5, 1.5)
+		streak.position = Vector2(-2000, i * (screen_size.y / num_streaks))
+		
+		var tween = create_tween()
+		
+		var duration = 0.8
+		tween.tween_property(streak, "position:x", screen_size.x + 300, duration)
+		
+		tween.parallel().tween_property(streak, "modulate:a", 0.0, 0.3).set_delay(0.5)
+		
+		tween.tween_callback(streak.queue_free)
+
 func change_scene_to(scene_path: String):
 	if is_transitioning:
 		return
 	
 	is_transitioning = true
 	
-	# Dark gray streaks
-	spawn_paint_streaks(Color(0.3, 0.3, 0.3), "in")
-	await get_tree().create_timer(0.6).timeout
-	
+	spawn_paint_wave()
+	await get_tree().create_timer(0.4).timeout
 	get_tree().change_scene_to_file(scene_path)
 	
-	# White streaks
-	spawn_paint_streaks(Color.WHITE, "out")
-	await get_tree().create_timer(0.6).timeout
-	
 	is_transitioning = false
-
-func spawn_paint_streaks(color: Color, direction: String):
-	for i in num_streaks:
-		create_paint_streak(color, direction)
-
-func create_paint_streak(color: Color, direction: String):
-	if streak_textures.is_empty():
-		return
-		
-	var streak = Sprite2D.new()
-	add_child(streak)
-
-	streak.texture = streak_textures[randi() % streak_textures.size()]
-	streak.modulate = color
-
-	streak.scale = Vector2(randf_range(1.0, 1.0), randf_range(1.0, 1.0))
-	streak.rotation = randf_range(-0.3, 0.3)
-
-	var screen_size = get_viewport().get_visible_rect().size
-	var tween = create_tween()
-
-	if direction == "in":
-		streak.position = Vector2(randf_range(-1000, -200), randf_range(-1000, screen_size.y + 200))
-		tween.tween_property(streak, "position:x", streak.position.x + screen_size.x + 700, randf_range(0.6, 1.0))
-	else: 
-		streak.position = Vector2(randf_range(screen_size.x + 200, screen_size.x + 500), randf_range(-200, screen_size.y + 200))
-		tween.tween_property(streak, "position:x", streak.position.x - screen_size.x - 700, randf_range(0.6, 1.0))
-
-	tween.tween_callback(streak.queue_free)
