@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://co3urqjbjfgdu"]
+
+[ext_resource type="Texture2D" uid="uid://dkjigos81r7bp" path="res://assets/dialogue/border_chat_box.png" id="1_bfpow"]
+[ext_resource type="Script" uid="uid://dtppe7wxi7rht" path="res://scenes/chat_box.gd" id="2_fyky8"]
+[ext_resource type="FontFile" uid="uid://3npgvibwus8" path="res://fonts/FingerPaint-Regular.ttf" id="3_bfpow"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fyky8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bfpow"]
+texture = ExtResource("1_bfpow")
+
+[node name="Main" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_top = -1.52588e-05
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(29.1945, 16.8915)
+color = Color(0.921569, 0.913725, 0.913725, 1)
+
+[node name="Chat Box" type="Panel" parent="."]
+material = SubResource("CanvasItemMaterial_fyky8")
+offset_left = -122.0
+offset_top = 229.0
+offset_right = 2630.0
+offset_bottom = 2293.0
+scale = Vector2(0.5009, 0.423843)
+theme_override_styles/panel = SubResource("StyleBoxTexture_bfpow")
+script = ExtResource("2_fyky8")
+
+[node name="Dialogue" type="RichTextLabel" parent="Chat Box"]
+offset_left = 513.077
+offset_top = 427.045
+offset_right = 1688.08
+offset_bottom = 649.045
+scale = Vector2(1.5, 1.5)
+theme_override_colors/default_color = Color(0.158472, 0.158472, 0.158472, 1)
+theme_override_colors/selection_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_bfpow")
+theme_override_font_sizes/normal_font_size = 50
+text = "ahhhhhhh"
+fit_content = true
