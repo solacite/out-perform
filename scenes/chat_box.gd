@@ -1,4 +1,6 @@
-extends RichTextLabel
+extends Panel
+
+@onready var text_label: RichTextLabel = $Dialogue
 
 var dialogues = {
 	"intro": [
@@ -21,6 +23,7 @@ var current_index = 0
 var dialogue_finished = false
 
 func _ready():
+	print(text_label)
 	gui_input.connect(_on_gui_input)
 	start_dialogue("intro")
 
@@ -33,16 +36,18 @@ func start_dialogue(key: String):
 
 func show_next_line():
 	if current_index < current_sequence.size():
-		text = current_sequence[current_index]
+		text_label.text = current_sequence[current_index]
 		current_index += 1
+
+		if current_index == current_sequence.size():
+			dialogue_finished = true
 	else:
-		text = ""
-		dialogue_finished = true
-		print("Dialogue finished!")
+		SceneTransition.change_scene_to("res://scenes/gameplay.tscn")
+
 
 func _on_gui_input(event):
-	if event is InputEventMouseButton and event.pressed:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if dialogue_finished:
-			get_tree().change_scene_to_file("res://scenes/gameplay.tscn")
+			SceneTransition.change_scene_to("res://scenes/gameplay.tscn")
 		else:
 			show_next_line()
