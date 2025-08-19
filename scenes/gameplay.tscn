@@ -1,9 +1,9 @@
 [gd_scene load_steps=15 format=3 uid="uid://dmt5xkn0x250c"]
 
-[ext_resource type="Script" uid="uid://bvmhmfcwdjlc5" path="res://parallax_background.gd" id="1_ctvyo"]
+[ext_resource type="Script" uid="uid://bvmhmfcwdjlc5" path="res://scripts/parallax_background.gd" id="1_ctvyo"]
 [ext_resource type="Texture2D" uid="uid://dlxhy0u72kmg5" path="res://assets/background/background.png" id="2_qixtg"]
 [ext_resource type="Texture2D" uid="uid://gogmgg5d1kys" path="res://assets/background/stage.png" id="3_nt65e"]
-[ext_resource type="Script" uid="uid://cychjmce76eea" path="res://character_body_2d.gd" id="4_bhmdk"]
+[ext_resource type="Script" uid="uid://cychjmce76eea" path="res://scripts/character_body_2d.gd" id="4_bhmdk"]
 [ext_resource type="Texture2D" uid="uid://ck12encwemhiu" path="res://assets/player/idle_up.png" id="5_s5y6v"]
 [ext_resource type="Texture2D" uid="uid://klhqm36e5ksq" path="res://assets/player/left.png" id="6_407ns"]
 [ext_resource type="Texture2D" uid="uid://cxrpp3143lhb7" path="res://assets/player/right.png" id="7_w3w6i"]
@@ -11,6 +11,21 @@
 [ext_resource type="Texture2D" uid="uid://dw2o1t8bbdf88" path="res://assets/player/down.png" id="9_m6b5a"]
 [ext_resource type="Texture2D" uid="uid://18sx0m5y8yaa" path="res://assets/player/idle_down.png" id="10_mesn4"]
 [ext_resource type="Texture2D" uid="uid://bw5ttfgriejh8" path="res://assets/background/audience.png" id="11_525vb"]
+
+[sub_resource type="Animation" id="Animation_fbudy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_s5y6v")]
+}
 
 [sub_resource type="Animation" id="Animation_cbffv"]
 resource_name = "idle"
@@ -27,21 +42,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [ExtResource("5_s5y6v"), ExtResource("10_mesn4")]
-}
-
-[sub_resource type="Animation" id="Animation_fbudy"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("5_s5y6v")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fbudy"]

@@ -14,4 +14,7 @@ func _process(delta):
 	scroll_offset = scroll_offset.lerp(target_offset, smoothing * delta)
 
 func _on_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/dialogue.tscn")
+	go_to_gameplay()
+	
+func go_to_gameplay():
+	SceneTransition.change_scene_to("res://scenes/dialogue.tscn")

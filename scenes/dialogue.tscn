@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dkjigos81r7bp" path="res://assets/dialogue/border_chat_box.png" id="1_bfpow"]
 [ext_resource type="FontFile" uid="uid://3npgvibwus8" path="res://fonts/FingerPaint-Regular.ttf" id="3_bfpow"]
-[ext_resource type="Script" uid="uid://duhl2a0pjaq27" path="res://scenes/dialogue.gd" id="3_fyky8"]
+[ext_resource type="Script" uid="uid://duhl2a0pjaq27" path="res://dialogue.gd" id="3_fyky8"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fyky8"]
 
