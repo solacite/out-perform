@@ -8,13 +8,21 @@ var dialogues = {
 		"Look at rookie here.",
 		"How much are they paying you to be here, anyway?",
 		"If you think you have a chance, then think again.",
-		"If you wanna get ranked higher, you gotta perform well.",
+		"To get ranked higher, you gotta perform well.",
 		"Or out-perform your coworkers, even.",
 		"Well, good luck.",
 		"Here's the test track our manager sent you."
 	],
 	"after_task": [
-		"So you're alive?"
+		"So you're alive?",
+		"Isn't that good to hear.",
+		"Are you ready to do it again?",
+		"Just think of it...no, just have fun with it.",
+		"You won't have time to do anything else, anyways.",
+		"Well...",
+		"Get on with it, I suppose.",
+		"...",
+		"Farewell."
 	]
 }
 

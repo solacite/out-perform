@@ -43,7 +43,11 @@ func change_scene_to(scene_path: String):
 	is_transitioning = true
 	
 	spawn_paint_wave()
+	ResourceLoader.load_threaded_request(scene_path)
+	
 	await get_tree().create_timer(0.4).timeout
+	
+	var scene_resource = ResourceLoader.load_threaded_get(scene_path)
 	get_tree().change_scene_to_file(scene_path)
 	
 	is_transitioning = false
