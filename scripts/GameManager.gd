@@ -1,5 +1,6 @@
 extends Node
 
+var saved_high_score: int = 0
 var gameplay_completed: bool = false
 var times_played: int = 0
 
@@ -20,3 +21,10 @@ func reset_game_state():
 
 func get_times_played() -> int:
 	return times_played
+
+func get_high_score() -> int:
+	return saved_high_score
+
+func set_high_score(score: int):
+	saved_high_score = score
+	print("New high score: " + str(score))

@@ -20,7 +20,7 @@ var dialogues = {
 		"They'll get faster every time.",
 		"...",
 		"Are you ready to do it again?",
-		"Just think of it...no, just have fun with it.",
+		"Just think of it...as, um...no, just have fun with it.",
 		"You won't have time to do anything else, anyways.",
 		"Well...",
 		"Get on with it, I suppose.",

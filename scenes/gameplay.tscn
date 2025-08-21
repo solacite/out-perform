@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://dmt5xkn0x250c"]
+[gd_scene load_steps=17 format=3 uid="uid://dmt5xkn0x250c"]
 
 [ext_resource type="Script" uid="uid://bvmhmfcwdjlc5" path="res://scripts/parallax_background.gd" id="1_ctvyo"]
 [ext_resource type="Script" uid="uid://disfjeektu2yh" path="res://scenes/gameplay.gd" id="1_qixtg"]
 [ext_resource type="Texture2D" uid="uid://dlxhy0u72kmg5" path="res://assets/background/background.png" id="2_qixtg"]
 [ext_resource type="Texture2D" uid="uid://gogmgg5d1kys" path="res://assets/background/stage.png" id="3_nt65e"]
 [ext_resource type="Script" uid="uid://cychjmce76eea" path="res://scripts/character_body_2d.gd" id="4_bhmdk"]
+[ext_resource type="FontFile" uid="uid://3npgvibwus8" path="res://fonts/FingerPaint-Regular.ttf" id="4_nt65e"]
 [ext_resource type="Texture2D" uid="uid://ck12encwemhiu" path="res://assets/player/idle_up.png" id="5_s5y6v"]
 [ext_resource type="Texture2D" uid="uid://klhqm36e5ksq" path="res://assets/player/left.png" id="6_407ns"]
 [ext_resource type="Texture2D" uid="uid://cxrpp3143lhb7" path="res://assets/player/right.png" id="7_w3w6i"]
@@ -64,6 +65,26 @@ motion_scale = Vector2(0.25, 0.25)
 position = Vector2(558, 310)
 scale = Vector2(0.497093, 0.397166)
 texture = ExtResource("2_qixtg")
+
+[node name="Instructions" type="RichTextLabel" parent="ParallaxBackground/Background"]
+offset_left = 441.0
+offset_top = 151.0
+offset_right = 1141.0
+offset_bottom = 251.0
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("4_nt65e")
+theme_override_font_sizes/normal_font_size = 50
+text = "press the arrow keys."
+
+[node name="CurrentScore" type="RichTextLabel" parent="ParallaxBackground/Background"]
+offset_left = 13.0
+offset_top = 19.0
+offset_right = 713.0
+offset_bottom = 119.0
+theme_override_colors/default_color = Color(0.266667, 0.266667, 0.266667, 1)
+theme_override_fonts/normal_font = ExtResource("4_nt65e")
+theme_override_font_sizes/normal_font_size = 20
+text = "blabla"
 
 [node name="Stage" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.8, 0.8)
