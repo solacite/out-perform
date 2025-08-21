@@ -16,6 +16,9 @@ var dialogues = {
 	"after_task": [
 		"So you're alive?",
 		"Isn't that good to hear.",
+		"You'll have to master the six colour tracks.",
+		"They'll get faster every time.",
+		"...",
 		"Are you ready to do it again?",
 		"Just think of it...no, just have fun with it.",
 		"You won't have time to do anything else, anyways.",

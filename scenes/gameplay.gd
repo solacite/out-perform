@@ -37,6 +37,10 @@ func _ready():
 	spectrum = AudioServer.get_bus_effect_instance(0, effect_index)
 	
 	audio_player.play()
+	audio_player.finished.connect(_on_audio_finished)
+
+func _on_audio_finished():
+	SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
 
 func _process(delta):
 	if spectrum == null or not audio_player.playing:
