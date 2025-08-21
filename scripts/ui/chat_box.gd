@@ -1,83 +1,95 @@
+# dialogue functionality
 extends Panel
 
 @onready var text_label: RichTextLabel = $Dialogue
 
+# dialogue dictionary
 var dialogues = {
-	"intro": [
-		"Well.",
-		"Look at rookie here.",
-		"How much are they paying you to be here, anyway?",
-		"If you think you have a chance, then think again.",
-		"To get ranked higher, you gotta perform well.",
-		"Or out-perform your coworkers, even.",
-		"Well, good luck.",
-		"Here's the test track our manager sent you."
-	],
-	"after_task": [
-		"So you're alive?",
-		"Isn't that good to hear.",
-		"You'll have to master the six colour tracks.",
-		"They'll get faster every time.",
-		"...",
-		"Are you ready to do it again?",
-		"Just think of it...as, um...no, just have fun with it.",
-		"You won't have time to do anything else, anyways.",
-		"Well...",
-		"Get on with it, I suppose.",
-		"...",
-		"Farewell."
-	]
+	"intro": {
+		"lines": [
+			"Well.",
+			"Look at rookie here.",
+			"How much are they paying you to be here, anyway?",
+			"If you think you have a chance, then think again.",
+			"To get ranked higher, you gotta perform well.",
+			"Or out-perform your coworkers, even.",
+			"Well, good luck.",
+			"Here's the test track our manager sent you."
+		],
+		"next_scene": "res://scenes/gameplay.tscn"
+	},
+	"after_task": {
+		"lines": [
+			"So you're alive?",
+			"Isn't that good to hear.",
+			"You'll have to master the six colour tracks.",
+			"They'll get faster every time.",
+			"...",
+			"Are you ready to do it again?",
+			"Just think of it...as, um...no, just have fun with it.",
+			"You won't have time to do anything else, anyways.",
+			"Well...",
+			"Get on with it, I suppose.",
+			"...",
+			"Farewell."
+		],
+		"next_scene": "res://scenes/track_menu.tscn",
+		"post_dialogue_action": "mark_intro_completed"
+	}
 }
 
+# state variables
 var current_sequence: Array = []
 var current_index := 0
 var dialogue_finished := false
 var typing := false
 var typing_speed := 0.03
-var current_dialogue_key := ""
 
 func _ready():
-	text_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# make dialogue box visible + don't track clicks from label
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	text_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	# connect signal
 	gui_input.connect(_on_gui_input)
-	determine_dialogue_state()
+	
+	# start dialogue
+	start_dialogue()
 
-func determine_dialogue_state():
-	if GameManager.get_times_played() == 0:
-		start_dialogue("intro")
-	elif GameManager.get_times_played() == 1:
-		start_dialogue("after_task")
+func start_dialogue():
+	var times_played = GameManager.get_times_played()
+	var dialogue_data
+	
+	# map times_played to a dialogue key.
+	if times_played == 0:
+		dialogue_data = dialogues["intro"]
+	elif times_played == 1:
+		dialogue_data = dialogues["after_task"]
 	else:
+		# go to default scene
 		get_tree().change_scene_to_file("res://scenes/track_menu.tscn")
+		return
 
-func start_dialogue(key: String):
-	if dialogues.has(key):
-		current_dialogue_key = key
-		current_sequence = dialogues[key]
-		current_index = 0
-		dialogue_finished = false
-		call_deferred("show_next_line")
+	current_sequence = dialogue_data.lines
+	current_index = 0
+	dialogue_finished = false
+	call_deferred("show_next_line")
 
 func show_next_line():
 	if current_index < current_sequence.size():
 		start_typing(current_sequence[current_index])
 	else:
 		dialogue_finished = true
-		handle_dialogue_completion()
-
-func handle_dialogue_completion():
-	if current_dialogue_key == "intro":
-		SceneTransition.change_scene_to("res://scenes/gameplay.tscn")
-	elif current_dialogue_key == "after_task":
-		GameManager.mark_intro_completed()
-		get_tree().change_scene_to_file("res://scenes/track_menu.tscn")
 
 func start_typing(line: String) -> void:
 	typing = true
 	text_label.text = ""
+	
+	# make sure text is clear
 	await get_tree().process_frame
 	
 	for i in range(line.length()):
+		# skip dialogue
 		if not typing:
 			text_label.text = line
 			break
@@ -86,8 +98,6 @@ func start_typing(line: String) -> void:
 	
 	typing = false
 	current_index += 1
-	if current_index >= current_sequence.size():
-		dialogue_finished = true
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
@@ -97,3 +107,23 @@ func _on_gui_input(event):
 			handle_dialogue_completion()
 		else:
 			show_next_line()
+
+# post-dialogue
+func handle_dialogue_completion():
+	var times_played = GameManager.get_times_played()
+	var dialogue_data
+	
+	if times_played == 0:
+		dialogue_data = dialogues["intro"]
+	elif times_played == 1:
+		dialogue_data = dialogues["after_task"]
+	else:
+		return
+
+	# post-dialogue actions
+	if "post_dialogue_action" in dialogue_data:
+		if dialogue_data.post_dialogue_action == "mark_intro_completed":
+			GameManager.mark_intro_completed()
+
+	# change scene
+	SceneTransition.change_scene_to(dialogue_data.next_scene)
