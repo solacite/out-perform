@@ -1,6 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://b6ydsimjiibv"]
 
-[ext_resource type="Script" uid="uid://bvmhmfcwdjlc5" path="res://scripts/parallax_background.gd" id="1_rtw2f"]
+[ext_resource type="Script" uid="uid://28136tfe1q6d" path="res://scripts/ui/main_menu.gd" id="1_oa1go"]
+[ext_resource type="Script" uid="uid://bvmhmfcwdjlc5" path="res://scripts/ui/parallax_background.gd" id="1_rtw2f"]
 [ext_resource type="Texture2D" uid="uid://dlxhy0u72kmg5" path="res://assets/background/background.png" id="2_oa1go"]
 [ext_resource type="Texture2D" uid="uid://gogmgg5d1kys" path="res://assets/background/stage.png" id="3_tbmy8"]
 [ext_resource type="Texture2D" uid="uid://bw5ttfgriejh8" path="res://assets/background/audience.png" id="4_jk1qb"]
@@ -35,40 +36,8 @@ region_rect = Rect2(1293.92, 843.41, 317.641, 305.949)
 texture = ExtResource("6_lgwnu")
 region_rect = Rect2(1293.92, 843.41, 317.641, 305.949)
 
-[sub_resource type="GDScript" id="GDScript_rtw2f"]
-script/source = "extends Camera2D
-
-@export var shake_enabled: bool = false
-@export var shake_intensity: float = 5.0
-
-var original_position: Vector2
-
-func _ready():
-	original_position = position
-	add_to_group(\"camera\")
-
-func _process(delta):
-	if shake_enabled:
-		var shake_x = randf_range(-shake_intensity, shake_intensity)
-		var shake_y = randf_range(-shake_intensity, shake_intensity)
-		position = original_position + Vector2(shake_x, shake_y)
-	else:
-		position = original_position
-
-func start_shake():
-	shake_enabled = true
-	print(\"Camera shake started\")
-
-func stop_shake():
-	shake_enabled = false
-	position = original_position
-	print(\"Camera shake stopped\")
-
-func set_intensity(intensity: float):
-	shake_intensity = intensity
-"
-
 [node name="Main" type="Node2D"]
+script = ExtResource("1_oa1go")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 script = ExtResource("1_rtw2f")
@@ -127,8 +96,4 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_qe12f")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(574, 326)
-script = SubResource("GDScript_rtw2f")
-
-[connection signal="pressed" from="ParallaxBackground/Play/Button" to="ParallaxBackground" method="_on_button_pressed"]
+[connection signal="pressed" from="ParallaxBackground/Play/Button" to="." method="_on_button_pressed"]

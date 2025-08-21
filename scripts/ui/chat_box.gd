@@ -40,14 +40,15 @@ func _ready():
 	text_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	gui_input.connect(_on_gui_input)
-	
 	determine_dialogue_state()
 
 func determine_dialogue_state():
-	if GameManager.has_played_before():
+	if GameManager.get_times_played() == 0:
+		start_dialogue("intro")
+	elif GameManager.get_times_played() == 1:
 		start_dialogue("after_task")
 	else:
-		start_dialogue("intro")
+		get_tree().change_scene_to_file("res://scenes/track_menu.tscn")
 
 func start_dialogue(key: String):
 	if dialogues.has(key):
@@ -69,7 +70,7 @@ func handle_dialogue_completion():
 		SceneTransition.change_scene_to("res://scenes/gameplay.tscn")
 	elif current_dialogue_key == "after_task":
 		GameManager.mark_intro_completed()
-		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
+		get_tree().change_scene_to_file("res://scenes/track_menu.tscn")
 
 func start_typing(line: String) -> void:
 	typing = true
@@ -85,7 +86,6 @@ func start_typing(line: String) -> void:
 	
 	typing = false
 	current_index += 1
-	
 	if current_index >= current_sequence.size():
 		dialogue_finished = true
 

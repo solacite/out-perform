@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://co3urqjbjfgdu"]
 
 [ext_resource type="Texture2D" uid="uid://dkjigos81r7bp" path="res://assets/dialogue/border_chat_box.png" id="1_bfpow"]
-[ext_resource type="Script" uid="uid://dtppe7wxi7rht" path="res://scenes/chat_box.gd" id="2_fyky8"]
+[ext_resource type="Script" uid="uid://dtppe7wxi7rht" path="res://scripts/ui/chat_box.gd" id="2_fyky8"]
 [ext_resource type="FontFile" uid="uid://3npgvibwus8" path="res://fonts/FingerPaint-Regular.ttf" id="3_bfpow"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fyky8"]
@@ -29,6 +29,7 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_bfpow")
 script = ExtResource("2_fyky8")
 
 [node name="Dialogue" type="RichTextLabel" parent="Chat Box"]
+layout_mode = 0
 offset_left = 513.077
 offset_top = 427.045
 offset_right = 1688.08

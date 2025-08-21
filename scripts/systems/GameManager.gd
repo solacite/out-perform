@@ -6,9 +6,10 @@ var high_score: int = 0
 var times_played: int = 0
 var has_played: bool = false
 var intro_completed: bool = false
+var second_intro_completed: bool = false
+var selected_track: String = ""
 
 func _ready():
-	clear_save_file()
 	load_game()
 
 func clear_save_file():
@@ -27,7 +28,9 @@ func save_game():
 		"high_score": high_score,
 		"times_played": times_played,
 		"has_played": has_played,
-		"intro_completed": intro_completed
+		"intro_completed": intro_completed,
+		"second_intro_completed": second_intro_completed,
+		"selected_track": selected_track
 	}
 	
 	var save_file = FileAccess.open(SAVE_FILE, FileAccess.WRITE)
@@ -63,6 +66,8 @@ func load_game():
 	times_played = save_dict.get("times_played", 0)
 	has_played = save_dict.get("has_played", false)
 	intro_completed = save_dict.get("intro_completed", false)
+	second_intro_completed = save_dict.get("second_intro_completed", false)
+	selected_track = save_dict.get("selected_track", "")
 
 func get_high_score() -> int:
 	return high_score
@@ -85,10 +90,25 @@ func get_times_played() -> int:
 
 func force_save():
 	save_game()
-	
+
 func mark_intro_completed():
 	intro_completed = true
 	save_game()
 
 func has_completed_intro() -> bool:
 	return intro_completed
+
+func mark_second_intro_completed():
+	second_intro_completed = true
+	save_game()
+
+func has_completed_second_intro() -> bool:
+	return second_intro_completed
+	
+func get_next_dialogue_branch() -> String:
+	if not intro_completed:
+		return "intro"
+	elif not second_intro_completed:
+		return "after_intro"
+	else:
+		return ""

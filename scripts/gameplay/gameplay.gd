@@ -11,7 +11,6 @@ extends Node
 
 @onready var score_label: RichTextLabel = $ParallaxBackground/Background/CurrentScore
 
-
 var arrow_textures = {
 	"left": preload("res://assets/arrows/left_arrow.png"),
 	"down": preload("res://assets/arrows/down_arrow.png"),
@@ -41,38 +40,36 @@ func _ready():
 	update_score_display()
 	add_to_group("gameplay")
 	
-	var flash_scene = preload("res://scenes/flash.tscn")
-	flash_layer = flash_scene.instantiate()
-	add_child(flash_layer)
-	
 	if audio_player == null:
-		print("AudioStreamPlayer2D not found at Stereo/AudioStreamPlayer2D.")
-		audio_player = find_child("AudioStreamPlayer2D", true, false) as AudioStreamPlayer2D
-		
+		audio_player = $Stereo/AudioStreamPlayer2D
 		if audio_player == null:
 			print("No AudioStreamPlayer2D found, creating one...")
 			audio_player = AudioStreamPlayer2D.new()
 			add_child(audio_player)
-	
-	if orange_audio != null:
-		audio_player.stream = orange_audio
+
+	var track: AudioStream = null
+	if GameManager.selected_track != "":
+		track = load(GameManager.selected_track)
 	else:
-		var loaded_audio = load("res://audio/orange.mp3")
-		if loaded_audio != null:
-			audio_player.stream = loaded_audio
-		else:
-			print("Error: Could not load audio file")
-			return
-	
+		track = load("res://audio/orange.mp3")
+
+	if track:
+		audio_player.stream = track
+		audio_player.play()
+		audio_player.finished.connect(_on_audio_finished)
+		print("Audio started playing:", GameManager.selected_track if GameManager.selected_track != "" else "orange.mp3")
+	else:
+		print("Error: Could not load audio file")
+
+	var flash_scene = preload("res://scenes/flash.tscn")
+	flash_layer = flash_scene.instantiate()
+	add_child(flash_layer)
+
 	var effect = AudioEffectSpectrumAnalyzer.new()
 	effect_index = AudioServer.get_bus_effect_count(0)
 	AudioServer.add_bus_effect(0, effect, effect_index)
 	spectrum = AudioServer.get_bus_effect_instance(0, effect_index)
-	
-	if audio_player:
-		audio_player.play()
-		audio_player.finished.connect(_on_audio_finished)
-		print("Audio started playing")
+
 
 func setup_instructions():
 	if instructions == null:
@@ -103,11 +100,13 @@ func fade_out_instructions():
 func _on_audio_finished():
 	save_high_score()
 	GameManager.mark_gameplay_completed()
-	SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
 
-func go_back_to_dialogue():
-	GameManager.mark_gameplay_completed()
-	SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
+	if GameManager.get_times_played() == 1:
+		SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
+	else:
+		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
+
+
 
 func _process(delta):
 	if spectrum == null or not audio_player.playing:
@@ -119,10 +118,10 @@ func _process(delta):
 		return
 	
 	var bands = {
-		"left": get_frequency_band(60, 200),
-		"down": get_frequency_band(200, 800),
-		"up": get_frequency_band(800, 1500),
-		"right": get_frequency_band(1500, 12000)
+		"left": get_frequency_band(0, 100),
+		"down": get_frequency_band(100, 400),
+		"up": get_frequency_band(400, 700),
+		"right": get_frequency_band(700, 12000)
 	}
 	
 	var directions = ["left", "down", "up", "right"]

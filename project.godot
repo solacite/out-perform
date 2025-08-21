@@ -20,8 +20,8 @@ buses/default_bus_layout=""
 
 [autoload]
 
-SceneTransition="*res://scripts/scene_transition.gd"
-GameManager="*res://scripts/GameManager.gd"
+SceneTransition="*res://scripts/systems/scene_transition.gd"
+GameManager="*res://scripts/systems/GameManager.gd"
 
 [display]
 
