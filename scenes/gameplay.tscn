@@ -125,3 +125,6 @@ texture = ExtResource("11_525vb")
 [node name="Stereo" type="Node" parent="."]
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Stereo"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(575, 319)

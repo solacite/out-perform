@@ -20,7 +20,10 @@ func _on_button_pressed():
 	go_to_gameplay()
 	
 func go_to_gameplay():
-	SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
+	if GameManager.has_completed_intro():
+		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
+	else:
+		SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
 
 func _ready():
 	if audio_player == null:

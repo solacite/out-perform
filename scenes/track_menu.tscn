@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cxudjgjj78vip"]
+
+[node name="Main" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(29.0272, 16.3258)
+color = Color(0.921569, 0.913725, 0.913725, 1)
+
+[node name="Red" type="Panel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 6.33889
+offset_top = 7.47282
+offset_right = 46.3389
+offset_bottom = 47.4728
+scale = Vector2(0.183268, 0.316279)
+
+[node name="Orange" type="Panel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 16.2951
+offset_top = 7.28907
+offset_right = 56.2951
+offset_bottom = 47.2891
+scale = Vector2(0.183268, 0.316279)
+
+[node name="Yellow" type="Panel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 25.9757
+offset_top = 7.28907
+offset_right = 65.9757
+offset_bottom = 47.2891
+scale = Vector2(0.183268, 0.316279)
+
+[node name="Green" type="Panel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 6.20109
+offset_top = 22.1735
+offset_right = 46.2011
+offset_bottom = 62.1735
+scale = Vector2(0.183268, 0.316279)
+
+[node name="Blue" type="Panel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 16.0195
+offset_top = 22.4797
+offset_right = 56.0195
+offset_bottom = 62.4797
+scale = Vector2(0.183268, 0.316279)
+
+[node name="Purple" type="Panel" parent="ColorRect"]
+layout_mode = 0
+offset_left = 25.5967
+offset_top = 22.1735
+offset_right = 65.5967
+offset_bottom = 62.1735
+scale = Vector2(0.183268, 0.316279)

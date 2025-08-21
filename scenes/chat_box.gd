@@ -66,11 +66,10 @@ func show_next_line():
 
 func handle_dialogue_completion():
 	if current_dialogue_key == "intro":
-		# First time - go to gameplay
 		SceneTransition.change_scene_to("res://scenes/gameplay.tscn")
 	elif current_dialogue_key == "after_task":
-		# After gameplay - go back to gameplay or lobby
-		SceneTransition.change_scene_to("res://scenes/gameplay.tscn")
+		GameManager.mark_intro_completed()
+		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
 
 func start_typing(line: String) -> void:
 	typing = true

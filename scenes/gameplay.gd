@@ -11,6 +11,7 @@ extends Node
 
 @onready var score_label: RichTextLabel = $ParallaxBackground/Background/CurrentScore
 
+
 var arrow_textures = {
 	"left": preload("res://assets/arrows/left_arrow.png"),
 	"down": preload("res://assets/arrows/down_arrow.png"),
@@ -24,11 +25,25 @@ var spectrum: AudioEffectInstance
 var last_arrow_time: float = 0
 var effect_index: int = -1
 var arrow_counter: int = 0
+var flash_layer
+
+func zoom_effect():
+	var camera = $Camera2D
+	if camera:
+		var zoom_tween = create_tween()
+		zoom_tween.tween_property(camera, "zoom", Vector2(1.02, 1.02), 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		zoom_tween.tween_interval(0.1)
+		zoom_tween.tween_property(camera, "zoom", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
 
 func _ready():
 	setup_instructions()
 	load_high_score()
 	update_score_display()
+	add_to_group("gameplay")
+	
+	var flash_scene = preload("res://scenes/flash.tscn")
+	flash_layer = flash_scene.instantiate()
+	add_child(flash_layer)
 	
 	if audio_player == null:
 		print("AudioStreamPlayer2D not found at Stereo/AudioStreamPlayer2D.")
@@ -185,6 +200,8 @@ func check_and_remove_arrow(direction: String):
 			found_matching_arrow = true
 			current_score += 1
 			
+			flash_layer.flash()
+			
 			if arrow.has_meta("tween"):
 				var tween = arrow.get_meta("tween")
 				if tween and tween.is_valid():
@@ -197,6 +214,9 @@ func check_and_remove_arrow(direction: String):
 	if not found_matching_arrow:
 		current_score = 0
 		update_score_display()
+
+func on_score():
+	flash_layer.flash()
 
 func _exit_tree():
 	if effect_index >= 0:
