@@ -40,6 +40,11 @@ func _ready():
 	audio_player.finished.connect(_on_audio_finished)
 
 func _on_audio_finished():
+	GameManager.mark_gameplay_completed()
+	SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
+
+func go_back_to_dialogue():
+	GameManager.mark_gameplay_completed()
 	SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
 
 func _process(delta):

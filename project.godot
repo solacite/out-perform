@@ -14,9 +14,14 @@ config/name="out-perform"
 run/main_scene="uid://b6ydsimjiibv"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
+[audio]
+
+buses/default_bus_layout=""
+
 [autoload]
 
 SceneTransition="*res://scripts/scene_transition.gd"
+GameManager="*res://scripts/GameManager.gd"
 
 [display]
 
