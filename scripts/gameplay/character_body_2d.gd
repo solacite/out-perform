@@ -8,7 +8,7 @@ extends CharacterBody2D
 @onready var action_timer = Timer.new()
 @onready var flash_timer = Timer.new()
 
-# textures for dff states
+# textures for diff states
 @export var idle_texture: Texture2D
 @export var left_texture: Texture2D
 @export var right_texture: Texture2D

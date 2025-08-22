@@ -1,7 +1,9 @@
 extends Node
 
-const SAVE_FILE = "user://savegame.save"
+# consts
+const SAVE_FILE: String = "user://savegame.save"
 
+# vars
 var high_score: int = 0
 var times_played: int = 0
 var has_played: bool = false
@@ -9,19 +11,21 @@ var intro_completed: bool = false
 var second_intro_completed: bool = false
 var selected_track: String = ""
 
+# initialization
 func _ready():
 	load_game()
 
+# save/load
 func clear_save_file():
-	var save_path = "user://savegame.save"
-	var dir = DirAccess.open("user://")
-	if dir:
-		if dir.remove(save_path) == OK:
-			print("Save file deleted successfully.")
+	var dir := DirAccess.open("user://")
+	if dir and dir.file_exists(SAVE_FILE):
+		var err = dir.remove(SAVE_FILE)
+		if err == OK:
+			print("save deleted ok")
 		else:
-			print("Failed to delete save file.")
+			print("fail del save, err:", err)
 	else:
-		print("Failed to open user directory.")
+		print("no save file")
 
 func save_game():
 	var save_dict = {
@@ -32,36 +36,29 @@ func save_game():
 		"second_intro_completed": second_intro_completed,
 		"selected_track": selected_track
 	}
-	
-	var save_file = FileAccess.open(SAVE_FILE, FileAccess.WRITE)
+	var save_file := FileAccess.open(SAVE_FILE, FileAccess.WRITE)
 	if save_file == null:
-		print("Error: Could not open save file for writing")
+		printerr("err: cant open save for write")
 		return
-	
-	var json_string = JSON.stringify(save_dict)
-	save_file.store_string(json_string)
+	save_file.store_string(JSON.stringify(save_dict))
 	save_file.close()
 
 func load_game():
 	if not FileAccess.file_exists(SAVE_FILE):
-		print("Save file doesn't exist, using defaults")
+		print("no save, using defaults")
 		return
-	
-	var save_file = FileAccess.open(SAVE_FILE, FileAccess.READ)
+	var save_file := FileAccess.open(SAVE_FILE, FileAccess.READ)
 	if save_file == null:
-		print("Error: Could not open save file for reading")
+		printerr("err: cant open save for read")
 		return
-	
-	var json_string = save_file.get_as_text()
+	var json_string: String = save_file.get_as_text()
 	save_file.close()
-	
-	var json = JSON.new()
-	var parse_result = json.parse(json_string)
+	var json := JSON.new()
+	var parse_result := json.parse(json_string)
 	if parse_result != OK:
-		print("Error: Could not parse save file")
+		printerr("err parse save, code:", parse_result)
 		return
-	
-	var save_dict = json.data
+	var save_dict: Dictionary = json.data
 	high_score = save_dict.get("high_score", 0)
 	times_played = save_dict.get("times_played", 0)
 	has_played = save_dict.get("has_played", false)
@@ -69,6 +66,7 @@ func load_game():
 	second_intro_completed = save_dict.get("second_intro_completed", false)
 	selected_track = save_dict.get("selected_track", "")
 
+# score
 func get_high_score() -> int:
 	return high_score
 
@@ -77,6 +75,7 @@ func set_high_score(new_score: int):
 		high_score = new_score
 		save_game()
 
+# gameplay track
 func has_played_before() -> bool:
 	return has_played
 
@@ -88,9 +87,7 @@ func mark_gameplay_completed():
 func get_times_played() -> int:
 	return times_played
 
-func force_save():
-	save_game()
-
+# intro/story
 func mark_intro_completed():
 	intro_completed = true
 	save_game()
@@ -104,7 +101,7 @@ func mark_second_intro_completed():
 
 func has_completed_second_intro() -> bool:
 	return second_intro_completed
-	
+
 func get_next_dialogue_branch() -> String:
 	if not intro_completed:
 		return "intro"
@@ -112,3 +109,7 @@ func get_next_dialogue_branch() -> String:
 		return "after_intro"
 	else:
 		return ""
+
+# debug
+func force_save():
+	save_game()

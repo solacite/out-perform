@@ -1,12 +1,7 @@
+# track selection menu
 extends Node2D
 
-@onready var red_btn: Button = $ColorRect/Red
-@onready var orange_btn: Button = $ColorRect/Orange
-@onready var yellow_btn: Button = $ColorRect/Yellow
-@onready var green_btn: Button = $ColorRect/Green
-@onready var blue_btn: Button = $ColorRect/Blue
-@onready var purple_btn: Button = $ColorRect/Purple
-
+# dictionary
 var track_map := {
 	"Red": "res://audio/red.mp3",
 	"Orange": "res://audio/orange.mp3",
@@ -16,17 +11,26 @@ var track_map := {
 	"Purple": "res://audio/purple.mp3",
 }
 
+# runs automatically
 func _ready():
-	red_btn.pressed.connect(func(): _on_track_pressed("Red"))
-	orange_btn.pressed.connect(func(): _on_track_pressed("Orange"))
-	yellow_btn.pressed.connect(func(): _on_track_pressed("Yellow"))
-	green_btn.pressed.connect(func(): _on_track_pressed("Green"))
-	blue_btn.pressed.connect(func(): _on_track_pressed("Blue"))
-	purple_btn.pressed.connect(func(): _on_track_pressed("Purple"))
+	# connect signal
+	$ColorRect/Red.pressed.connect(func(): _on_track_pressed("Red"))
+	$ColorRect/Orange.pressed.connect(func(): _on_track_pressed("Orange"))
+	$ColorRect/Yellow.pressed.connect(func(): _on_track_pressed("Yellow"))
+	$ColorRect/Green.pressed.connect(func(): _on_track_pressed("Green"))
+	$ColorRect/Blue.pressed.connect(func(): _on_track_pressed("Blue"))
+	$ColorRect/Purple.pressed.connect(func(): _on_track_pressed("Purple"))
 
+# triggered by track button
 func _on_track_pressed(color: String) -> void:
-	var track_path = track_map[color]
-
-	GameManager.selected_track = track_path
-
-	SceneTransition.change_scene_to("res://scenes/gameplay.tscn")
+	# get file path
+	var track_path = track_map.get(color)
+	
+	# check if track exists
+	if track_path:
+		# set track and change scene
+		GameManager.selected_track = track_path
+		SceneTransition.change_scene_to("res://scenes/gameplay.tscn")
+	else:
+		# if track is nonexistent
+		print("Error: Track not found for color ", color)
