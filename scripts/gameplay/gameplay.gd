@@ -24,11 +24,10 @@ var arrow_textures = {
 var current_score: int = 0
 var high_score: int = 0
 var spectrum: AudioEffectInstance
-var current_track : String = ""
+var current_track_color: Color = Color.WHITE
 var last_arrow_time: float = 0
 var effect_index: int = -1
 var flash_layer
-
 
 # cam zoom
 func zoom_effect():
@@ -62,13 +61,21 @@ func setup_audio():
 			add_child(audio_player)
 
 	# load track
-	var track: AudioStream = load(GameManager.selected_track) if GameManager.selected_track != "" else load("res://audio/orange.mp3")
+	var track_path = GameManager.selected_track if GameManager.selected_track != "" else "res://audio/orange.mp3"
+	var track: AudioStream = load(track_path)
 
 	if track:
 		audio_player.stream = track
+
+		# increase volume only for green.mp3
+		if track_path.ends_with("green.mp3"):
+			audio_player.volume_db = 6
+		else:
+			audio_player.volume_db = 0
+
 		audio_player.play()
 		audio_player.finished.connect(_on_audio_finished)
-		print("Audio started:", GameManager.selected_track if GameManager.selected_track != "" else "orange.mp3")
+		print("Audio started:", track_path.get_file())
 	else:
 		print("Error: Could not load audio file")
 
@@ -113,6 +120,7 @@ func fade_out_instructions():
 
 # upon track end
 func _on_audio_finished():
+	await get_tree().create_timer(1.0).timeout
 	save_high_score()
 	GameManager.mark_gameplay_completed()
 	
@@ -202,8 +210,26 @@ func check_and_remove_arrow(direction: String):
 	for arrow in get_children():
 		if arrow is Sprite2D and arrow.get_meta("direction") == direction:
 			current_score += 1
-			flash_layer.flash()
-			
+
+			# pick flash color based on current track
+			print(GameManager.selected_track.get_file())
+			match GameManager.selected_track.get_file():
+				"red.mp3":
+					flash_layer.flash(Color(1, 0, 0))     # red
+				"orange.mp3":
+					flash_layer.flash(Color(1, 0.5, 0))   # orange
+				"yellow.mp3":
+					flash_layer.flash(Color(1, 1, 0))     # yellow
+				"green.mp3":
+					flash_layer.flash(Color(0, 1, 0))     # green
+				"blue.mp3":
+					flash_layer.flash(Color(0, 0, 1))     # blue
+				"purple.mp3":
+					flash_layer.flash(Color(0.5, 0, 0.5)) # purple
+				_:
+					flash_layer.flash(Color(1, 1, 1))     # default white
+
+
 			if arrow.has_meta("tween"):
 				var tween = arrow.get_meta("tween")
 				if tween and tween.is_valid(): 
