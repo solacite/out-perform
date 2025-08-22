@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cum33m68bunj7"]
+
+[ext_resource type="Script" uid="uid://bb2dglltfja0p" path="res://scripts/ui/game_over.gd" id="1_wqhvx"]
+[ext_resource type="FontFile" uid="uid://3npgvibwus8" path="res://fonts/FingerPaint-Regular.ttf" id="1_xeevv"]
+
+[node name="Main" type="CanvasLayer"]
+script = ExtResource("1_wqhvx")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1160.0
+offset_bottom = 668.0
+color = Color(0.937179, 0.694377, 0.70908, 1)
+
+[node name="GameOver" type="RichTextLabel" parent="."]
+offset_left = 185.0
+offset_top = 280.0
+offset_right = 1085.0
+offset_bottom = 380.0
+theme_override_colors/default_color = Color(0.854902, 0.105882, 0.294118, 1)
+theme_override_fonts/normal_font = ExtResource("1_xeevv")
+theme_override_font_sizes/normal_font_size = 60
+text = "do you want to get fired?"

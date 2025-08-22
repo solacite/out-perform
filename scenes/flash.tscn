@@ -15,9 +15,9 @@ border_blend = true
 script = ExtResource("1_ywdqv")
 
 [node name="Outline" type="Panel" parent="."]
-offset_left = -107.0
-offset_top = -41.0
-offset_right = -67.0
-offset_bottom = -1.0
+offset_left = -66.0
+offset_top = -44.0
+offset_right = -28.0
+offset_bottom = -5.0
 scale = Vector2(33.9161, 18.517)
 theme_override_styles/panel = SubResource("StyleBoxFlat_ywdqv")

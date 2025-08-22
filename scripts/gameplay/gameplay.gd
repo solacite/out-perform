@@ -4,11 +4,13 @@ extends Node
 @onready var audio_player: AudioStreamPlayer2D = get_node_or_null("Stereo/AudioStreamPlayer2D")
 @onready var instructions: Control = $ParallaxBackground/Background/Instructions
 @onready var score_label: RichTextLabel = $ParallaxBackground/Background/CurrentScore
+@onready var strike_label: RichTextLabel = $ParallaxBackground/Background/Strikes
 
 # exports
 @export var orange_audio: AudioStream
 @export var frequency_threshold: float = 1.0     # energy necessary to spawn arrows
-@export var arrow_cooldown: float = 0.5          # delay btwn arrow spawns
+@export var base_arrow_cooldown: float = 0.5          # delay btwn arrow spawns
+@export var arrow_cooldown: float = 0.5
 @export var beat_lookahead: float = 1.6          # time arrows take to fall
 @export var arrow_scale: float = 0.2             # arrow size
 
@@ -21,6 +23,8 @@ var arrow_textures = {
 }
 
 # gameplay vars
+var strikes: int = 5
+const MAX_STRIKES: int = 5
 var current_score: int = 0
 var high_score: int = 0
 var spectrum: AudioEffectInstance
@@ -42,6 +46,7 @@ func zoom_effect():
 
 # initializing
 func _ready():
+	update_strikes()
 	setup_instructions()
 	load_high_score()
 	update_score_display()
@@ -120,14 +125,33 @@ func fade_out_instructions():
 
 # upon track end
 func _on_audio_finished():
-	await get_tree().create_timer(1.0).timeout
-	save_high_score()
-	GameManager.mark_gameplay_completed()
-	
-	if GameManager.get_times_played() == 1:
-		SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
+	if strikes != 0:
+		arrow_cooldown = arrow_cooldown * 0.8
+		audio_player.pitch_scale = audio_player.pitch_scale * 1.2
+		audio_player.play()
+		await get_tree().create_timer(1.0).timeout
 	else:
-		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
+		audio_player.stop()
+		arrow_cooldown = base_arrow_cooldown
+		audio_player.pitch_scale = 1
+		
+		var game_over_scene = preload("res://scenes/game_over.tscn").instantiate()
+		add_child(game_over_scene)
+
+		# overlay
+		game_over_scene.fade_in(1.0)
+		await get_tree().create_timer(1.0).timeout
+		game_over_scene.fade_out(1.0)
+		await get_tree().create_timer(1.0).timeout
+		
+		save_high_score()
+		strikes = 5
+		GameManager.mark_gameplay_completed()
+		
+		if GameManager.get_times_played() == 1:
+			SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
+		else:
+			SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
 
 # beat detection + arrow spawning
 func _process(delta):
@@ -212,23 +236,19 @@ func check_and_remove_arrow(direction: String):
 			current_score += 1
 
 			# pick flash color based on current track
-			print(GameManager.selected_track.get_file())
 			match GameManager.selected_track.get_file():
 				"red.mp3":
-					flash_layer.flash(Color(1, 0, 0))     # red
+					flash_layer.flash(Color8(212, 68, 68))     # red
 				"orange.mp3":
-					flash_layer.flash(Color(1, 0.5, 0))   # orange
+					flash_layer.flash(Color8(255, 176, 104))   # orange
 				"yellow.mp3":
-					flash_layer.flash(Color(1, 1, 0))     # yellow
+					flash_layer.flash(Color8(255, 247, 118))   # yellow
 				"green.mp3":
-					flash_layer.flash(Color(0, 1, 0))     # green
+					flash_layer.flash(Color8(140, 217, 162))   # green
 				"blue.mp3":
-					flash_layer.flash(Color(0, 0, 1))     # blue
+					flash_layer.flash(Color8(116, 149, 217))   # blue
 				"purple.mp3":
-					flash_layer.flash(Color(0.5, 0, 0.5)) # purple
-				_:
-					flash_layer.flash(Color(1, 1, 1))     # default white
-
+					flash_layer.flash(Color8(194, 140, 227))   # purple
 
 			if arrow.has_meta("tween"):
 				var tween = arrow.get_meta("tween")
@@ -240,6 +260,12 @@ func check_and_remove_arrow(direction: String):
 			return
 	
 	# reset score if no existing arrows that match
+	if strikes > 0:
+		strikes -= 1
+	elif strikes == 0:
+		_on_audio_finished()
+	update_strikes()
+	
 	current_score = 0
 	update_score_display()
 
@@ -248,7 +274,12 @@ func arrow_missed(arrow):
 		current_score = 0
 		update_score_display()
 		arrow.queue_free()
-		print("Missed arrow")
+		
+		if strikes > 0:
+			strikes -= 1
+		elif strikes == 0:
+			_on_audio_finished()
+		update_strikes()
 
 # handle score
 func update_score_display():
@@ -273,3 +304,6 @@ func save_high_score():
 func _exit_tree():
 	if effect_index >= 0:
 		AudioServer.remove_bus_effect(0, effect_index)
+
+func update_strikes():
+	strike_label.text = "X".repeat(strikes)
