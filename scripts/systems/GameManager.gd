@@ -18,6 +18,13 @@ signal round_ended
 func _ready():
 	load_game()
 	
+	print("game manager debug on startup")
+	print("intro_completed: ", intro_completed)
+	print("second_intro_completed: ", second_intro_completed)
+	print("has_played: ", has_played)
+	print("times_played: ", times_played)
+	print("is_first_gameplay: ", is_first_gameplay)
+	
 	var tracks = ["red", "orange", "yellow", "green", "blue", "purple"]
 	for track in tracks:
 		if not high_scores.has(track):
@@ -93,6 +100,16 @@ func has_played_before() -> bool:
 	return has_played
 
 func mark_gameplay_completed():
+	print("mark gameplay completed")
+	print("before - times_played: ", times_played, " has_played: ", has_played)
+	
+	times_played += 1
+	has_played = true
+	
+	print("after - times_played: ", times_played, " has_played: ", has_played)
+	save_game()
+	print("game saved")
+	
 	times_played += 1
 	has_played = true
 	save_game()
@@ -110,17 +127,25 @@ func has_completed_intro() -> bool:
 
 func mark_second_intro_completed():
 	second_intro_completed = true
+	is_first_gameplay = false
 	save_game()
 
 func has_completed_second_intro() -> bool:
 	return second_intro_completed
 
 func get_next_dialogue_branch() -> String:
+	print("get next_dialogue_branch debug")
+	print("intro_completed: ", intro_completed)
+	print("second_intro_completed: ", second_intro_completed)
+	
 	if not intro_completed:
+		print("returning: intro")
 		return "intro"
 	elif not second_intro_completed:
+		print("returning: after_intro")
 		return "after_intro"
 	else:
+		print("returning: empty string")
 		return ""
 
 # debug

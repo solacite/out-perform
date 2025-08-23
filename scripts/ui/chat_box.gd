@@ -18,7 +18,7 @@ var dialogues = {
 		],
 		"next_scene": "res://scenes/gameplay.tscn"
 	},
-	"after_task": {
+	"after_intro": {
 		"lines": [
 			"So you're alive?",
 			"Isn't that good to hear.",
@@ -39,7 +39,7 @@ var dialogues = {
 			"Farewell."
 		],
 		"next_scene": "res://scenes/track_menu.tscn",
-		"post_dialogue_action": "mark_intro_completed"
+		"post_dialogue_action": "mark_second_intro_completed"
 	}
 }
 
@@ -62,19 +62,17 @@ func _ready():
 	start_dialogue()
 
 func start_dialogue():
-	var times_played = GameManager.get_times_played()
+	var dialogue_branch = GameManager.get_next_dialogue_branch()
 	var dialogue_data
 	
-	# map times_played to a dialogue key.
-	if times_played == 0:
+	if dialogue_branch == "intro":
 		dialogue_data = dialogues["intro"]
-	elif times_played == 1:
-		dialogue_data = dialogues["after_task"]
+	elif dialogue_branch == "after_intro":
+		dialogue_data = dialogues["after_intro"]
 	else:
-		# go to default scene
-		get_tree().change_scene_to_file("res://scenes/track_menu.tscn")
+		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
 		return
-
+		
 	current_sequence = dialogue_data.lines
 	current_index = 0
 	dialogue_finished = false
@@ -115,20 +113,13 @@ func _on_gui_input(event):
 
 # post-dialogue
 func handle_dialogue_completion():
-	var times_played = GameManager.get_times_played()
-	var dialogue_data
+	var dialogue_branch = GameManager.get_next_dialogue_branch()
 	
-	if times_played == 0:
-		dialogue_data = dialogues["intro"]
-	elif times_played == 1:
-		dialogue_data = dialogues["after_task"]
-	else:
+	if dialogue_branch == "":
+		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
 		return
-
-	# post-dialogue actions
-	if "post_dialogue_action" in dialogue_data:
-		if dialogue_data.post_dialogue_action == "mark_intro_completed":
-			GameManager.mark_intro_completed()
-
-	# change scene
-	SceneTransition.change_scene_to(dialogue_data.next_scene)
+	
+	if dialogue_branch == "intro":
+		SceneTransition.change_scene_to(dialogues["intro"]["next_scene"])
+	elif dialogue_branch == "after_intro":
+		SceneTransition.change_scene_to(dialogues["after_intro"]["next_scene"])

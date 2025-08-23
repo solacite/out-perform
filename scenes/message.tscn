@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bvpubf22htuwk" path="res://scripts/ui/message.gd" id="1_11qlq"]
 [ext_resource type="FontFile" uid="uid://3npgvibwus8" path="res://fonts/FingerPaint-Regular.ttf" id="2_x5w8s"]
 
-[node name="Main" type="Node2D"]
+[node name="Message" type="Node2D"]
 script = ExtResource("1_11qlq")
 
 [node name="Message" type="RichTextLabel" parent="."]

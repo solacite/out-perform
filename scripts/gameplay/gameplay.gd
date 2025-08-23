@@ -119,17 +119,20 @@ func _on_audio_finished():
 
 func handle_round_end():
 	var track_key = GameManager.selected_track.get_file().to_lower().trim_suffix(".mp3")
-	if total_arrows_hit > GameManager.high_scores.get(track_key, 0):
-		GameManager.high_scores[track_key] = total_arrows_hit
+	
+	if best_combo > GameManager.high_scores.get(track_key, 0):
+		GameManager.high_scores[track_key] = best_combo
 		GameManager.save_game()
 	
 	audio_player.stop()
-	var final_score = high_score
+	var final_score = best_combo
 	
 	GameManager.finalize_score(final_score, strikes == 0)
 
 	if GameManager.is_first_gameplay:
 		GameManager.round_ended.emit()
+		GameManager.mark_intro_completed()
+		GameManager.mark_gameplay_completed()
 		GameManager.is_first_gameplay = false
 		SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
 	elif strikes == 0:
@@ -235,7 +238,7 @@ func check_and_remove_arrow(direction: String):
 				best_combo = current_combo
 				
 			# Ssawn a message every 10 combo hits
-			if current_combo % 10 == 0:
+			if current_combo % 5 == 0:
 				var current_track_color = Color.WHITE
 				match GameManager.selected_track.get_file():
 					"red.mp3":
@@ -307,14 +310,16 @@ func arrow_missed(arrow):
 func update_score_display():
 	if not score_combo_label or not combo_label:
 		return
-	var overall_high_score = GameManager.high_scores.get(GameManager.selected_track.get_file().to_lower().trim_suffix(".mp3"), 0)
 	
 	var track_key = GameManager.selected_track.get_file().to_lower().trim_suffix(".mp3")
-	if total_arrows_hit > GameManager.high_scores.get(track_key, 0):
-		GameManager.high_scores[track_key] = total_arrows_hit
+	
+	if best_combo > GameManager.high_scores.get(track_key, 0):
+		GameManager.high_scores[track_key] = best_combo
 		GameManager.save_game()
-
-	score_combo_label.text = "high score: %d\nbest combo: %d" % [overall_high_score, best_combo]
+	
+	var current_high_score = GameManager.high_scores.get(track_key, 0)
+	
+	score_combo_label.text = "high score: %d\nbest combo: %d" % [current_high_score, best_combo]
 	score_label.text = "score: %d" % total_arrows_hit
 	combo_label.text = "x%d" % [current_combo]
 
@@ -366,11 +371,16 @@ func fade_out_instructions():
 		fade_out.tween_callback(func(): instructions.visible = false)
 
 func spawn_random_message(position: Vector2, color: Color):
-	Message.set_message(Message.messages[randi() % Message.messages.size()], color)
-	Message.position = position
-	Message.rotation_degrees = randf_range(-15, 15)
+	var message_scene = preload("res://scenes/message.tscn")
+	var message_instance = message_scene.instantiate()
+	
+	var random_message = message_instance.messages[randi() % message_instance.messages.size()]
+	message_instance.set_message(random_message, color)
+	message_instance.position = position
+	message_instance.rotation_degrees = randf_range(-15, 15)
 
-	get_tree().root.add_child(Message)
+	get_tree().current_scene.add_child(message_instance)
 
 	await get_tree().create_timer(1.0).timeout
-	Message.fade_out()
+	if is_instance_valid(message_instance):
+		message_instance.fade_out()

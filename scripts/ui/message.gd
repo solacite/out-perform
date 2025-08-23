@@ -1,8 +1,6 @@
-# message.gd (script for message.tscn)
 extends Node2D
 
-@onready var message_label: RichTextLabel = $Message
-
+var message_label: RichTextLabel
 var messages = [
 	"okay!",
 	"alright!",
@@ -14,9 +12,18 @@ var messages = [
 	"good work!"
 ]
 
+func _init():
+	# Wait for the scene to be ready, then get the node
+	call_deferred("setup_message_label")
+
+func setup_message_label():
+	message_label = get_node("Message")
+
 func _ready():
+	if message_label == null:
+		setup_message_label()
 	fade_in()
-	
+
 # fade in
 func fade_in(duration: float = 0.5):
 	modulate.a = 0.0
@@ -31,5 +38,11 @@ func fade_out(duration: float = 0.5):
 	
 # update text
 func set_message(text: String, color: Color):
-	message_label.text = text
-	message_label.modulate = color
+	if message_label == null:
+		setup_message_label()
+	
+	if message_label != null:
+		message_label.text = text
+		message_label.modulate = color
+	else:
+		print("ERROR: Still couldn't find message_label!")
