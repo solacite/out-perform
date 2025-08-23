@@ -168,9 +168,7 @@ func _on_audio_finished():
 		
 		# overlay
 		game_over_scene.fade_in(1.0)
-		await get_tree().create_timer(1.0).timeout
-		game_over_scene.fade_out(1.0)
-		await get_tree().create_timer(1.0).timeout
+		await get_tree().create_timer(3.0).timeout
 		
 		save_high_score()
 		strikes = 5

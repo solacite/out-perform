@@ -13,6 +13,8 @@ func _on_button_pressed():
 	
 # decides what scene to load
 func go_to_gameplay():
+	audio_player.stop()
+	
 	# go to track menu if intro is done
 	if GameManager.has_completed_intro() or GameManager.has_completed_second_intro():
 		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")

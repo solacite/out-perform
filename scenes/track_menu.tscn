@@ -1,6 +1,182 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxudjgjj78vip"]
+[gd_scene load_steps=66 format=3 uid="uid://cxudjgjj78vip"]
 
 [ext_resource type="Script" uid="uid://7ji01o2ehve3" path="res://scripts/ui/track_menu.gd" id="1_ye5vv"]
+[ext_resource type="Texture2D" uid="uid://c1726r3s4qnao" path="res://assets/tracks/red.png" id="2_65usn"]
+[ext_resource type="Texture2D" uid="uid://b52uem072rqkv" path="res://assets/tracks/default.png" id="3_ks608"]
+[ext_resource type="Texture2D" uid="uid://d1qqlmx6bxbs0" path="res://assets/tracks/orange.png" id="4_ks608"]
+[ext_resource type="Texture2D" uid="uid://dsxdjw8gyrd12" path="res://assets/tracks/yellow.png" id="5_2b2hd"]
+[ext_resource type="Texture2D" uid="uid://dbd3ac88msxx6" path="res://assets/tracks/green.png" id="6_vs5ns"]
+[ext_resource type="Texture2D" uid="uid://bfnqtajy4hxst" path="res://assets/tracks/blue.png" id="7_7w7mg"]
+[ext_resource type="Texture2D" uid="uid://lujs18cmjbex" path="res://assets/tracks/purple.png" id="8_7w7mg"]
+[ext_resource type="FontFile" uid="uid://3npgvibwus8" path="res://fonts/FingerPaint-Regular.ttf" id="9_ujy0w"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2b2hd"]
+texture = ExtResource("2_65usn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6wcb2"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vs5ns"]
+texture = ExtResource("4_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7w7mg"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ujy0w"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eipsw"]
+texture = ExtResource("4_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_emqc7"]
+texture = ExtResource("4_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tc84v"]
+texture = ExtResource("4_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j6uxn"]
+texture = ExtResource("4_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g2ffg"]
+texture = ExtResource("4_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3ipea"]
+texture = ExtResource("4_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qrfbk"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hctmn"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mdowy"]
+texture = ExtResource("5_2b2hd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1mkyd"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nosj8"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jjlig"]
+texture = ExtResource("5_2b2hd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_knbs2"]
+texture = ExtResource("5_2b2hd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fonag"]
+texture = ExtResource("5_2b2hd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_anafr"]
+texture = ExtResource("5_2b2hd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_whha2"]
+texture = ExtResource("5_2b2hd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jfpfu"]
+texture = ExtResource("5_2b2hd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eybv0"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i00oh"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mavje"]
+texture = ExtResource("6_vs5ns")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ojol0"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_by6qt"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jm3jk"]
+texture = ExtResource("6_vs5ns")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_olkkm"]
+texture = ExtResource("6_vs5ns")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ta1k7"]
+texture = ExtResource("6_vs5ns")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0pq2l"]
+texture = ExtResource("6_vs5ns")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qt4gc"]
+texture = ExtResource("6_vs5ns")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pq4vf"]
+texture = ExtResource("6_vs5ns")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_podoy"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1e75s"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1r807"]
+texture = ExtResource("7_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jy666"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eydb7"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6yav0"]
+texture = ExtResource("7_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ukkce"]
+texture = ExtResource("7_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ut3h7"]
+texture = ExtResource("7_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0dfx8"]
+texture = ExtResource("7_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sy71e"]
+texture = ExtResource("7_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hlvs7"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2s85t"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vioar"]
+texture = ExtResource("8_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gii2v"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w30q5"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b5jdu"]
+texture = ExtResource("8_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lrghn"]
+texture = ExtResource("8_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qsw4d"]
+texture = ExtResource("8_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_74x36"]
+texture = ExtResource("8_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v2s8o"]
+texture = ExtResource("8_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x0w03"]
+texture = ExtResource("8_7w7mg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rpthy"]
+texture = ExtResource("3_ks608")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w54nj"]
+texture = ExtResource("3_ks608")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ye5vv")
@@ -13,48 +189,182 @@ color = Color(0.921569, 0.913725, 0.913725, 1)
 
 [node name="Red" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 6.33889
-offset_top = 7.47282
-offset_right = 46.3389
-offset_bottom = 47.4728
+offset_left = 5.13312
+offset_top = 4.83897
+offset_right = 59.1331
+offset_bottom = 59.839
 scale = Vector2(0.183268, 0.316279)
+theme_override_styles/focus = SubResource("StyleBoxTexture_2b2hd")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_6wcb2")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_6wcb2")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_2b2hd")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_2b2hd")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxTexture_2b2hd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2b2hd")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxTexture_2b2hd")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_2b2hd")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_6wcb2")
+theme_override_styles/normal = SubResource("StyleBoxTexture_6wcb2")
 
 [node name="Orange" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 16.2951
-offset_top = 7.28907
-offset_right = 56.2951
-offset_bottom = 47.2891
+offset_left = 15.296
+offset_top = 5.14523
+offset_right = 69.296
+offset_bottom = 60.1452
 scale = Vector2(0.183268, 0.316279)
+theme_override_styles/focus = SubResource("StyleBoxTexture_vs5ns")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_7w7mg")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_ujy0w")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_eipsw")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_emqc7")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxTexture_tc84v")
+theme_override_styles/hover = SubResource("StyleBoxTexture_j6uxn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxTexture_g2ffg")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_3ipea")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_qrfbk")
+theme_override_styles/normal = SubResource("StyleBoxTexture_hctmn")
 
 [node name="Yellow" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 25.9757
-offset_top = 7.28907
-offset_right = 65.9757
-offset_bottom = 47.2891
+offset_left = 24.7699
+offset_top = 4.77771
+offset_right = 78.7699
+offset_bottom = 59.7777
 scale = Vector2(0.183268, 0.316279)
+theme_override_styles/focus = SubResource("StyleBoxTexture_mdowy")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_1mkyd")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_nosj8")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_jjlig")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_knbs2")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxTexture_fonag")
+theme_override_styles/hover = SubResource("StyleBoxTexture_anafr")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxTexture_whha2")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jfpfu")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_eybv0")
+theme_override_styles/normal = SubResource("StyleBoxTexture_i00oh")
 
 [node name="Green" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 6.20109
-offset_top = 22.1735
-offset_right = 46.2011
-offset_bottom = 62.1735
+offset_left = 4.61636
+offset_top = 20.9484
+offset_right = 58.6164
+offset_bottom = 75.9484
 scale = Vector2(0.183268, 0.316279)
+theme_override_styles/focus = SubResource("StyleBoxTexture_mavje")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_ojol0")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_by6qt")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_jm3jk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_olkkm")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxTexture_ta1k7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_0pq2l")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxTexture_qt4gc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pq4vf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_podoy")
+theme_override_styles/normal = SubResource("StyleBoxTexture_1e75s")
 
 [node name="Blue" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 16.0195
-offset_top = 22.4797
-offset_right = 56.0195
-offset_bottom = 62.4797
+offset_left = 14.8826
+offset_top = 21.1935
+offset_right = 69.8826
+offset_bottom = 75.1935
 scale = Vector2(0.183268, 0.316279)
+theme_override_styles/focus = SubResource("StyleBoxTexture_1r807")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_jy666")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_eydb7")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_6yav0")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_ukkce")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxTexture_ut3h7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_0dfx8")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxTexture_sy71e")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_1r807")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_hlvs7")
+theme_override_styles/normal = SubResource("StyleBoxTexture_2s85t")
 
 [node name="Purple" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 25.5967
-offset_top = 22.1735
-offset_right = 65.5967
-offset_bottom = 62.1735
+offset_left = 25.0799
+offset_top = 20.8872
+offset_right = 80.0799
+offset_bottom = 74.8872
 scale = Vector2(0.183268, 0.316279)
+theme_override_styles/focus = SubResource("StyleBoxTexture_vioar")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_gii2v")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_w30q5")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_b5jdu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_lrghn")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxTexture_qsw4d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_74x36")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxTexture_v2s8o")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_x0w03")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_rpthy")
+theme_override_styles/normal = SubResource("StyleBoxTexture_w54nj")
+
+[node name="TrackRanks" type="Node" parent="."]
+
+[node name="Red" type="RichTextLabel" parent="TrackRanks"]
+offset_left = 202.0
+offset_top = 146.0
+offset_right = 366.0
+offset_bottom = 310.0
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 100
+text = "X"
+horizontal_alignment = 1
+
+[node name="Orange" type="RichTextLabel" parent="TrackRanks"]
+offset_left = 491.0
+offset_top = 140.0
+offset_right = 655.0
+offset_bottom = 304.0
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 100
+text = "X"
+horizontal_alignment = 1
+
+[node name="Yellow" type="RichTextLabel" parent="TrackRanks"]
+offset_left = 785.0
+offset_top = 144.0
+offset_right = 949.0
+offset_bottom = 308.0
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 100
+text = "X"
+horizontal_alignment = 1
+
+[node name="Green" type="RichTextLabel" parent="TrackRanks"]
+offset_left = 202.0
+offset_top = 403.0
+offset_right = 366.0
+offset_bottom = 567.0
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 100
+text = "X"
+horizontal_alignment = 1
+
+[node name="Blue" type="RichTextLabel" parent="TrackRanks"]
+offset_left = 491.0
+offset_top = 397.0
+offset_right = 655.0
+offset_bottom = 561.0
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 100
+text = "X"
+horizontal_alignment = 1
+
+[node name="Purple" type="RichTextLabel" parent="TrackRanks"]
+offset_left = 785.0
+offset_top = 401.0
+offset_right = 949.0
+offset_bottom = 565.0
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 100
+text = "X"
+horizontal_alignment = 1
