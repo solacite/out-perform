@@ -14,6 +14,7 @@ var is_first_gameplay: bool = true
 
 # initialization
 func _ready():
+	clear_save_file()
 	load_game()
 
 # save/load

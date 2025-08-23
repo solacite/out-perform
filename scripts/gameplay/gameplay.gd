@@ -264,6 +264,9 @@ func check_and_remove_arrow(direction: String):
 	for arrow in get_children():
 		if arrow is Sprite2D and arrow.get_meta("direction") == direction:
 			current_score += 1
+			
+			if GameManager.is_first_gameplay:
+				flash_layer.flash(Color8(255, 176, 104))   # orange
 
 			# pick flash color based on current track
 			match GameManager.selected_track.get_file():
