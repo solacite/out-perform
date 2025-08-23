@@ -3,7 +3,9 @@ extends Node
 # nodes + UI
 @onready var audio_player: AudioStreamPlayer2D = get_node_or_null("Stereo/AudioStreamPlayer2D")
 @onready var instructions: Control = $ParallaxBackground/Background/Instructions
-@onready var score_label: RichTextLabel = $ParallaxBackground/Background/CurrentScore
+@onready var combo_label: RichTextLabel = $ParallaxBackground/People/Combo
+@onready var score_label: RichTextLabel = $ParallaxBackground/People/Score
+@onready var score_combo_label: RichTextLabel = $ParallaxBackground/Background/ScoreCombo
 @onready var strike_label: RichTextLabel = $ParallaxBackground/Background/Strikes
 
 # exports
@@ -25,14 +27,18 @@ var arrow_textures = {
 # gameplay vars
 var strikes: int = 5
 const MAX_STRIKES: int = 5
-var current_score: int = 0
-var high_score: int = 0
 var spectrum: AudioEffectInstance
 var current_track_color: Color = Color.WHITE
 var audio_finished_processing = false
 var last_arrow_time: float = 0
 var effect_index: int = -1
+var total_arrows_hit: int = 0
 var flash_layer
+
+var high_score: int = 0
+var current_score: int = 0
+var current_combo: int = 0
+var best_combo: int = 0
 
 # cam zoom
 func zoom_effect():
@@ -47,9 +53,12 @@ func zoom_effect():
 
 # initializing
 func _ready():
+	total_arrows_hit = 0
+	current_combo = 0
+	best_combo = 0
+	
 	update_strikes()
 	setup_instructions()
-	load_high_score()
 	update_score_display()
 	add_to_group("gameplay")
 	setup_audio()
@@ -98,88 +107,44 @@ func setup_spectrum():
 	AudioServer.add_bus_effect(0, effect, effect_index)
 	spectrum = AudioServer.get_bus_effect_instance(0, effect_index)
 
-# fade functionality
-func setup_instructions():
-	if instructions == null:
-		print("Instructions node not found!")
-		return
-		
-	if not GameManager.has_played_before():
-		instructions.modulate.a = 0.0
-		instructions.visible = true
-		
-		var fade_in = create_tween()
-		fade_in.tween_property(instructions, "modulate:a", 1.0, 1.0)
-		fade_in.tween_callback(start_fade_out_timer)
-	else:
-		instructions.visible = false
-
-func start_fade_out_timer():
-	await get_tree().create_timer(3.0).timeout
-	fade_out_instructions()
-
-func fade_out_instructions():
-	if instructions:
-		var fade_out = create_tween()
-		fade_out.tween_property(instructions, "modulate:a", 0.0, 1.0)
-		fade_out.tween_callback(func(): instructions.visible = false)
-
 # upon track end
 func _on_audio_finished():
-	# Prevent multiple executions
 	if audio_finished_processing:
-		print("already processing audio finished, ignoring")
 		return
 	
 	audio_finished_processing = true
 	print("processing audio finished")
 	
+	handle_round_end()
+
+func handle_round_end():
+	var track_key = GameManager.selected_track.get_file().to_lower().trim_suffix(".mp3")
+	if total_arrows_hit > GameManager.high_scores.get(track_key, 0):
+		GameManager.high_scores[track_key] = total_arrows_hit
+		GameManager.save_game()
+	
+	audio_player.stop()
+	var final_score = high_score
+	
+	GameManager.finalize_score(final_score, strikes == 0)
+
 	if GameManager.is_first_gameplay:
-		print("first gameplay done")
-		audio_player.stop()
-		arrow_cooldown = base_arrow_cooldown
-		audio_player.pitch_scale = 1
-		
-		await get_tree().create_timer(1.0).timeout
-		save_high_score()
-		strikes = 5
-		GameManager.mark_gameplay_completed()
-		
-		print("first gameplay")
+		GameManager.round_ended.emit()
 		GameManager.is_first_gameplay = false
 		SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
-		return
-	
-	if strikes != 0:
-		# Reset the flag for repeat attempts
-		audio_finished_processing = false
-		arrow_cooldown = arrow_cooldown * 0.8
-		audio_player.pitch_scale = audio_player.pitch_scale * 1.2
-		audio_player.play()
-		await get_tree().create_timer(1.0).timeout
-	else:
-		audio_player.stop()
-		arrow_cooldown = base_arrow_cooldown
-		audio_player.pitch_scale = 1
-		
-		print("game over scene")
+	elif strikes == 0:
+		GameManager.round_ended.emit()
 		var game_over_scene = preload("res://scenes/game_over.tscn").instantiate()
 		add_child(game_over_scene)
-		
-		# overlay
 		game_over_scene.fade_in(1.0)
 		await get_tree().create_timer(3.0).timeout
-		
-		save_high_score()
-		strikes = 5
-		GameManager.mark_gameplay_completed()
-		
-		if GameManager.get_times_played() == 1:
-			print("played one time, going to dialogue scene")
-			SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
-		else:
-			print("played > one time, going to track menu scene")
-			SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
+		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
+	else:
+		show_instructions_with_speed_message()
+		audio_finished_processing = false
+		audio_player.pitch_scale *= 1.2
+		audio_player.play()
+		await get_tree().create_timer(1.0).timeout
 
 # beat detection + arrow spawning
 func _process(delta):
@@ -261,7 +226,32 @@ func spawn_arrow(direction: String):
 func check_and_remove_arrow(direction: String):
 	for arrow in get_children():
 		if arrow is Sprite2D and arrow.get_meta("direction") == direction:
-			current_score += 1
+			# check if current combo is new best combo
+			total_arrows_hit += 1
+			current_combo += 1
+			
+			# Check if the current combo is a new best combo
+			if current_combo > best_combo:
+				best_combo = current_combo
+				
+			# Ssawn a message every 10 combo hits
+			if current_combo % 10 == 0:
+				var current_track_color = Color.WHITE
+				match GameManager.selected_track.get_file():
+					"red.mp3":
+						current_track_color = Color8(212, 68, 68)
+					"orange.mp3":
+						current_track_color = Color8(255, 176, 104)
+					"yellow.mp3":
+						current_track_color = Color8(255, 247, 118)
+					"green.mp3":
+						current_track_color = Color8(140, 217, 162)
+					"blue.mp3":
+						current_track_color = Color8(116, 149, 217)
+					"purple.mp3":
+						current_track_color = Color8(194, 140, 227)
+				
+				spawn_random_message(Vector2(randf_range(100, 900), randf_range(200, 600)), current_track_color)
 			
 			if GameManager.is_first_gameplay:
 				flash_layer.flash(Color8(255, 176, 104))   # orange
@@ -291,6 +281,7 @@ func check_and_remove_arrow(direction: String):
 			return
 	
 	# reset score if no existing arrows that match
+	current_combo = 0
 	if strikes > 0:
 		strikes -= 1
 	elif strikes == 0:
@@ -302,7 +293,7 @@ func check_and_remove_arrow(direction: String):
 
 func arrow_missed(arrow):
 	if is_instance_valid(arrow):
-		current_score = 0
+		current_combo = 0
 		update_score_display()
 		arrow.queue_free()
 		
@@ -314,22 +305,18 @@ func arrow_missed(arrow):
 
 # handle score
 func update_score_display():
-	if not score_label: 
+	if not score_combo_label or not combo_label:
 		return
+	var overall_high_score = GameManager.high_scores.get(GameManager.selected_track.get_file().to_lower().trim_suffix(".mp3"), 0)
 	
-	if current_score > high_score:
-		high_score = current_score
-		GameManager.set_high_score(high_score)
-		
-	score_label.text = "high score: %d\nscore: %d" % [high_score, current_score]
+	var track_key = GameManager.selected_track.get_file().to_lower().trim_suffix(".mp3")
+	if total_arrows_hit > GameManager.high_scores.get(track_key, 0):
+		GameManager.high_scores[track_key] = total_arrows_hit
+		GameManager.save_game()
 
-func load_high_score():
-	high_score = GameManager.get_high_score()
-
-func save_high_score():
-	if current_score > high_score:
-		high_score = current_score
-		GameManager.set_high_score(high_score)
+	score_combo_label.text = "high score: %d\nbest combo: %d" % [overall_high_score, best_combo]
+	score_label.text = "score: %d" % total_arrows_hit
+	combo_label.text = "x%d" % [current_combo]
 
 # cleanup
 func _exit_tree():
@@ -338,3 +325,52 @@ func _exit_tree():
 
 func update_strikes():
 	strike_label.text = "X".repeat(strikes)
+
+func setup_instructions():
+	if instructions == null:
+		print("Instructions node not found!")
+		return
+
+	if not GameManager.has_played_before():
+		instructions.modulate.a = 0.0
+		instructions.visible = true
+
+		var fade_in = create_tween()
+		fade_in.tween_property(instructions, "modulate:a", 1.0, 1.0)
+		fade_in.tween_callback(start_fade_out_timer)
+	else:
+		instructions.visible = false
+
+func show_instructions_with_speed_message():
+	if instructions == null:
+		return
+
+	instructions.visible = true
+	instructions.modulate.a = 0.0
+
+	var speed_message = "speed up!"
+	instructions.text = speed_message
+
+	var fade_in = create_tween()
+	fade_in.tween_property(instructions, "modulate:a", 1.0, 1.0)
+	fade_in.tween_callback(start_fade_out_timer)
+
+func start_fade_out_timer():
+	await get_tree().create_timer(1.0).timeout
+	fade_out_instructions()
+
+func fade_out_instructions():
+	if instructions:
+		var fade_out = create_tween()
+		fade_out.tween_property(instructions, "modulate:a", 0.0, 0.2)
+		fade_out.tween_callback(func(): instructions.visible = false)
+
+func spawn_random_message(position: Vector2, color: Color):
+	Message.set_message(Message.messages[randi() % Message.messages.size()], color)
+	Message.position = position
+	Message.rotation_degrees = randf_range(-15, 15)
+
+	get_tree().root.add_child(Message)
+
+	await get_tree().create_timer(1.0).timeout
+	Message.fade_out()

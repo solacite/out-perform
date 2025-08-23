@@ -18,6 +18,7 @@ offset_bottom = 648.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_edmg7")
 
 [node name="Image" type="TextureRect" parent="."]
+layout_mode = 0
 offset_left = -6.0
 offset_top = -72.0
 offset_right = 1168.0

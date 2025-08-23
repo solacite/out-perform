@@ -4,18 +4,24 @@ extends Node
 const SAVE_FILE: String = "user://savegame.save"
 
 # vars
-var high_score: int = 0
+var high_scores: Dictionary = {}
 var times_played: int = 0
 var has_played: bool = false
 var intro_completed: bool = false
 var second_intro_completed: bool = false
 var selected_track: String = ""
-var is_first_gameplay: bool = true
+var is_first_gameplay: bool = false
+
+signal round_ended
 
 # initialization
 func _ready():
-	clear_save_file()
 	load_game()
+	
+	var tracks = ["red", "orange", "yellow", "green", "blue", "purple"]
+	for track in tracks:
+		if not high_scores.has(track):
+			high_scores[track] = 0
 
 # save/load
 func clear_save_file():
@@ -31,7 +37,7 @@ func clear_save_file():
 
 func save_game():
 	var save_dict = {
-		"high_score": high_score,
+		"high_scores": high_scores,
 		"times_played": times_played,
 		"has_played": has_played,
 		"intro_completed": intro_completed,
@@ -62,7 +68,7 @@ func load_game():
 		printerr("err parse save, code:", parse_result)
 		return
 	var save_dict: Dictionary = json.data
-	high_score = save_dict.get("high_score", 0)
+	high_scores = save_dict.get("high_scores", {})
 	times_played = save_dict.get("times_played", 0)
 	has_played = save_dict.get("has_played", false)
 	intro_completed = save_dict.get("intro_completed", false)
@@ -71,11 +77,15 @@ func load_game():
 
 # score
 func get_high_score() -> int:
-	return high_score
+	return high_scores.get(selected_track, 0)
 
 func set_high_score(new_score: int):
-	if new_score > high_score:
-		high_score = new_score
+	if selected_track.is_empty():
+		printerr("error: no track selected to save high score.")
+		return
+	
+	if new_score > high_scores.get(selected_track, 0):
+		high_scores[selected_track] = new_score
 		save_game()
 
 # gameplay track
@@ -116,3 +126,18 @@ func get_next_dialogue_branch() -> String:
 # debug
 func force_save():
 	save_game()
+	
+func finalize_score(final_score: int, is_game_over: bool):
+	if selected_track.is_empty():
+		printerr("error: cannot finalize score, no track selected.")
+		return
+	
+	var track_key = selected_track.get_file().to_lower().trim_suffix(".mp3")
+	
+	if final_score > high_scores.get(track_key, 0):
+		high_scores[track_key] = final_score
+		print("new high score saved for ", track_key, ": ", final_score)
+	
+	save_game()
+
+	mark_gameplay_completed()

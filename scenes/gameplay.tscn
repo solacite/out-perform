@@ -76,14 +76,14 @@ theme_override_fonts/normal_font = ExtResource("4_nt65e")
 theme_override_font_sizes/normal_font_size = 50
 text = "press the arrow keys."
 
-[node name="CurrentScore" type="RichTextLabel" parent="ParallaxBackground/Background"]
-offset_left = 13.0
-offset_top = 19.0
-offset_right = 713.0
-offset_bottom = 119.0
+[node name="ScoreCombo" type="RichTextLabel" parent="ParallaxBackground/Background"]
+offset_left = 16.0
+offset_top = 13.0
+offset_right = 716.0
+offset_bottom = 113.0
 theme_override_colors/default_color = Color(0.266667, 0.266667, 0.266667, 1)
 theme_override_fonts/normal_font = ExtResource("4_nt65e")
-theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/normal_font_size = 16
 text = "blabla"
 
 [node name="Strikes" type="RichTextLabel" parent="ParallaxBackground/Background"]
@@ -127,6 +127,28 @@ libraries = {
 
 [node name="People" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(1.5, 1.5)
+
+[node name="Combo" type="RichTextLabel" parent="ParallaxBackground/People"]
+offset_left = 322.0
+offset_top = 25.0412
+offset_right = 550.0
+offset_bottom = 189.041
+rotation = -0.252867
+theme_override_colors/default_color = Color(0.266667, 0.266667, 0.266667, 1)
+theme_override_fonts/normal_font = ExtResource("4_nt65e")
+theme_override_font_sizes/normal_font_size = 60
+text = "x"
+
+[node name="Score" type="RichTextLabel" parent="ParallaxBackground/People"]
+offset_left = 343.0
+offset_top = 96.0
+offset_right = 571.0
+offset_bottom = 260.0
+rotation = -0.252867
+theme_override_colors/default_color = Color(0.266667, 0.266667, 0.266667, 1)
+theme_override_fonts/normal_font = ExtResource("4_nt65e")
+theme_override_font_sizes/normal_font_size = 20
+text = "aaa"
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/People"]
 position = Vector2(571, 211)

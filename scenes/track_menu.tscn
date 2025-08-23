@@ -190,9 +190,9 @@ color = Color(0.921569, 0.913725, 0.913725, 1)
 [node name="Red" type="Button" parent="ColorRect"]
 layout_mode = 0
 offset_left = 5.13312
-offset_top = 4.83897
+offset_top = 1.9601
 offset_right = 59.1331
-offset_bottom = 59.839
+offset_bottom = 56.9601
 scale = Vector2(0.183268, 0.316279)
 theme_override_styles/focus = SubResource("StyleBoxTexture_2b2hd")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_6wcb2")
@@ -209,9 +209,9 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_6wcb2")
 [node name="Orange" type="Button" parent="ColorRect"]
 layout_mode = 0
 offset_left = 15.296
-offset_top = 5.14523
+offset_top = 2.26635
 offset_right = 69.296
-offset_bottom = 60.1452
+offset_bottom = 57.2663
 scale = Vector2(0.183268, 0.316279)
 theme_override_styles/focus = SubResource("StyleBoxTexture_vs5ns")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_7w7mg")
@@ -228,9 +228,9 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_hctmn")
 [node name="Yellow" type="Button" parent="ColorRect"]
 layout_mode = 0
 offset_left = 24.7699
-offset_top = 4.77771
+offset_top = 1.89883
 offset_right = 78.7699
-offset_bottom = 59.7777
+offset_bottom = 56.8988
 scale = Vector2(0.183268, 0.316279)
 theme_override_styles/focus = SubResource("StyleBoxTexture_mdowy")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_1mkyd")
@@ -247,9 +247,9 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_i00oh")
 [node name="Green" type="Button" parent="ColorRect"]
 layout_mode = 0
 offset_left = 4.61636
-offset_top = 20.9484
+offset_top = 18.0695
 offset_right = 58.6164
-offset_bottom = 75.9484
+offset_bottom = 73.0695
 scale = Vector2(0.183268, 0.316279)
 theme_override_styles/focus = SubResource("StyleBoxTexture_mavje")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_ojol0")
@@ -266,9 +266,9 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_1e75s")
 [node name="Blue" type="Button" parent="ColorRect"]
 layout_mode = 0
 offset_left = 14.8826
-offset_top = 21.1935
+offset_top = 18.3146
 offset_right = 69.8826
-offset_bottom = 75.1935
+offset_bottom = 72.3146
 scale = Vector2(0.183268, 0.316279)
 theme_override_styles/focus = SubResource("StyleBoxTexture_1r807")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_jy666")
@@ -285,9 +285,9 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_2s85t")
 [node name="Purple" type="Button" parent="ColorRect"]
 layout_mode = 0
 offset_left = 25.0799
-offset_top = 20.8872
+offset_top = 18.0083
 offset_right = 80.0799
-offset_bottom = 74.8872
+offset_bottom = 72.0083
 scale = Vector2(0.183268, 0.316279)
 theme_override_styles/focus = SubResource("StyleBoxTexture_vioar")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_gii2v")
@@ -304,67 +304,158 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_w54nj")
 [node name="TrackRanks" type="Node" parent="."]
 
 [node name="Red" type="RichTextLabel" parent="TrackRanks"]
-offset_left = 202.0
-offset_top = 146.0
-offset_right = 366.0
-offset_bottom = 310.0
-theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+offset_left = 196.0
+offset_top = 90.0001
+offset_right = 360.0
+offset_bottom = 254.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.362829, 0.362829, 0.362829, 1)
 theme_override_fonts/normal_font = ExtResource("9_ujy0w")
 theme_override_font_sizes/normal_font_size = 100
 text = "X"
 horizontal_alignment = 1
 
 [node name="Orange" type="RichTextLabel" parent="TrackRanks"]
-offset_left = 491.0
-offset_top = 140.0
-offset_right = 655.0
-offset_bottom = 304.0
-theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+offset_left = 485.0
+offset_top = 84.0001
+offset_right = 649.0
+offset_bottom = 248.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.362829, 0.362829, 0.362829, 1)
 theme_override_fonts/normal_font = ExtResource("9_ujy0w")
 theme_override_font_sizes/normal_font_size = 100
 text = "X"
 horizontal_alignment = 1
 
 [node name="Yellow" type="RichTextLabel" parent="TrackRanks"]
-offset_left = 785.0
-offset_top = 144.0
-offset_right = 949.0
-offset_bottom = 308.0
-theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+offset_left = 779.0
+offset_top = 88.0001
+offset_right = 943.0
+offset_bottom = 252.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.362829, 0.362829, 0.362829, 1)
 theme_override_fonts/normal_font = ExtResource("9_ujy0w")
 theme_override_font_sizes/normal_font_size = 100
 text = "X"
 horizontal_alignment = 1
 
 [node name="Green" type="RichTextLabel" parent="TrackRanks"]
-offset_left = 202.0
-offset_top = 403.0
-offset_right = 366.0
-offset_bottom = 567.0
-theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+offset_left = 196.0
+offset_top = 347.0
+offset_right = 360.0
+offset_bottom = 511.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.362829, 0.362829, 0.362829, 1)
 theme_override_fonts/normal_font = ExtResource("9_ujy0w")
 theme_override_font_sizes/normal_font_size = 100
 text = "X"
 horizontal_alignment = 1
 
 [node name="Blue" type="RichTextLabel" parent="TrackRanks"]
-offset_left = 491.0
-offset_top = 397.0
-offset_right = 655.0
-offset_bottom = 561.0
-theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+offset_left = 485.0
+offset_top = 341.0
+offset_right = 649.0
+offset_bottom = 505.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.362829, 0.362829, 0.362829, 1)
 theme_override_fonts/normal_font = ExtResource("9_ujy0w")
 theme_override_font_sizes/normal_font_size = 100
 text = "X"
 horizontal_alignment = 1
 
 [node name="Purple" type="RichTextLabel" parent="TrackRanks"]
-offset_left = 785.0
-offset_top = 401.0
-offset_right = 949.0
-offset_bottom = 565.0
-theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+offset_left = 779.0
+offset_top = 345.0
+offset_right = 943.0
+offset_bottom = 509.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.362829, 0.362829, 0.362829, 1)
 theme_override_fonts/normal_font = ExtResource("9_ujy0w")
 theme_override_font_sizes/normal_font_size = 100
 text = "X"
 horizontal_alignment = 1
+
+[node name="TrackScores" type="Node" parent="."]
+
+[node name="Red" type="RichTextLabel" parent="TrackScores"]
+offset_left = 201.0
+offset_top = 202.0
+offset_right = 365.0
+offset_bottom = 366.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 40
+text = "X"
+horizontal_alignment = 1
+
+[node name="Orange" type="RichTextLabel" parent="TrackScores"]
+offset_left = 490.0
+offset_top = 196.0
+offset_right = 654.0
+offset_bottom = 360.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 40
+text = "X"
+horizontal_alignment = 1
+
+[node name="Yellow" type="RichTextLabel" parent="TrackScores"]
+offset_left = 784.0
+offset_top = 200.0
+offset_right = 948.0
+offset_bottom = 364.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 40
+text = "X"
+horizontal_alignment = 1
+
+[node name="Green" type="RichTextLabel" parent="TrackScores"]
+offset_left = 201.0
+offset_top = 459.0
+offset_right = 365.0
+offset_bottom = 623.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 40
+text = "X"
+horizontal_alignment = 1
+
+[node name="Blue" type="RichTextLabel" parent="TrackScores"]
+offset_left = 490.0
+offset_top = 453.0
+offset_right = 654.0
+offset_bottom = 617.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 40
+text = "X"
+horizontal_alignment = 1
+
+[node name="Purple" type="RichTextLabel" parent="TrackScores"]
+offset_left = 784.0
+offset_top = 457.0
+offset_right = 948.0
+offset_bottom = 621.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 40
+text = "X"
+horizontal_alignment = 1
+
+[node name="Message" type="RichTextLabel" parent="."]
+offset_left = 176.0
+offset_top = 561.0
+offset_right = 976.0
+offset_bottom = 661.0
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.572988, 0.572988, 0.572988, 1)
+theme_override_fonts/normal_font = ExtResource("9_ujy0w")
+theme_override_font_sizes/normal_font_size = 25
+text = "X"
