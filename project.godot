@@ -22,6 +22,7 @@ buses/default_bus_layout=""
 
 SceneTransition="*res://scripts/systems/scene_transition.gd"
 GameManager="*res://scripts/systems/GameManager.gd"
+MusicManager="*res://scripts/systems/MusicManager.gd"
 
 [display]
 

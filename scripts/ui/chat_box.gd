@@ -78,26 +78,36 @@ func start_dialogue():
 	dialogue_finished = false
 	call_deferred("show_next_line")
 
+
 func show_next_line():
 	if current_index < current_sequence.size():
 		start_typing(current_sequence[current_index])
 	else:
-		dialogue_finished = true
+		handle_dialogue_completion()
 
 func start_typing(line: String) -> void:
 	typing = true
 	text_label.text = ""
 	
-	# make sure text is clear
 	await get_tree().process_frame
 	
 	for i in range(line.length()):
-		# skip dialogue
 		if not typing:
 			text_label.text = line
 			break
-		text_label.text += line[i]
-		await get_tree().create_timer(typing_speed).timeout
+		
+		var char = line[i]
+		text_label.text += char
+		
+		var delay = typing_speed
+		
+		match char:
+			",":
+				delay += 0.15  # short pause
+			".", "!", "?":
+				delay += 0.3   # longer pause
+		
+		await get_tree().create_timer(delay).timeout
 	
 	typing = false
 	current_index += 1
@@ -106,8 +116,6 @@ func _on_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if typing:
 			typing = false
-		elif dialogue_finished:
-			handle_dialogue_completion()
 		else:
 			show_next_line()
 
@@ -115,11 +123,11 @@ func _on_gui_input(event):
 func handle_dialogue_completion():
 	var dialogue_branch = GameManager.get_next_dialogue_branch()
 	
-	if dialogue_branch == "":
-		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
-		return
-	
 	if dialogue_branch == "intro":
+		print("INTRO DIALOGUE DONE")
 		SceneTransition.change_scene_to(dialogues["intro"]["next_scene"])
 	elif dialogue_branch == "after_intro":
+		print("AFTER INTRO DIALOGUE DONE")
 		SceneTransition.change_scene_to(dialogues["after_intro"]["next_scene"])
+	else:
+		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")

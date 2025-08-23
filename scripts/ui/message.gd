@@ -13,11 +13,12 @@ var messages = [
 ]
 
 func _init():
-	# Wait for the scene to be ready, then get the node
 	call_deferred("setup_message_label")
 
 func setup_message_label():
 	message_label = get_node("Message")
+	if !GameManager.intro_completed:
+		message_label.modulate = Color8(255, 176, 104)
 
 func _ready():
 	if message_label == null:

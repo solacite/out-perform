@@ -17,6 +17,8 @@ var track_map := {
 
 # runs automatically
 func _ready():
+	MusicManager.play_lobby_music()
+	print("track menu is playing lobby msuic")
 	GameManager.round_ended.connect(update_track_labels)
 	update_track_labels()
 	get_average_high_score()

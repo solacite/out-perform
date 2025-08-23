@@ -32,11 +32,10 @@ var current_track_color: Color = Color.WHITE
 var audio_finished_processing = false
 var last_arrow_time: float = 0
 var effect_index: int = -1
-var total_arrows_hit: int = 0
 var flash_layer
 
 var high_score: int = 0
-var current_score: int = 0
+var total_arrows_hit: int = 0
 var current_combo: int = 0
 var best_combo: int = 0
 
@@ -67,6 +66,8 @@ func _ready():
 
 # audio setup
 func setup_audio():
+	MusicManager.stop_lobby_music()
+	
 	# check if audio player exists
 	if audio_player == null:
 		audio_player = $Stereo/AudioStreamPlayer2D
@@ -120,14 +121,12 @@ func _on_audio_finished():
 func handle_round_end():
 	var track_key = GameManager.selected_track.get_file().to_lower().trim_suffix(".mp3")
 	
-	if best_combo > GameManager.high_scores.get(track_key, 0):
-		GameManager.high_scores[track_key] = best_combo
+	if total_arrows_hit > GameManager.high_scores.get(track_key, 0):
+		GameManager.high_scores[track_key] = total_arrows_hit
 		GameManager.save_game()
 	
 	audio_player.stop()
 	var final_score = best_combo
-	
-	GameManager.finalize_score(final_score, strikes == 0)
 
 	if GameManager.is_first_gameplay:
 		GameManager.round_ended.emit()
@@ -236,6 +235,8 @@ func check_and_remove_arrow(direction: String):
 			# Check if the current combo is a new best combo
 			if current_combo > best_combo:
 				best_combo = current_combo
+			
+			update_score_display()
 				
 			# Ssawn a message every 10 combo hits
 			if current_combo % 5 == 0:
@@ -291,7 +292,7 @@ func check_and_remove_arrow(direction: String):
 		_on_audio_finished()
 	update_strikes()
 	
-	current_score = 0
+	total_arrows_hit = 0
 	update_score_display()
 
 func arrow_missed(arrow):
@@ -313,8 +314,8 @@ func update_score_display():
 	
 	var track_key = GameManager.selected_track.get_file().to_lower().trim_suffix(".mp3")
 	
-	if best_combo > GameManager.high_scores.get(track_key, 0):
-		GameManager.high_scores[track_key] = best_combo
+	if total_arrows_hit > GameManager.high_scores.get(track_key, 0):
+		GameManager.high_scores[track_key] = total_arrows_hit
 		GameManager.save_game()
 	
 	var current_high_score = GameManager.high_scores.get(track_key, 0)

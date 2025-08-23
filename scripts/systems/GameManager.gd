@@ -16,6 +16,7 @@ signal round_ended
 
 # initialization
 func _ready():
+	#clear_save_file()
 	load_game()
 	
 	print("game manager debug on startup")
@@ -59,6 +60,7 @@ func save_game():
 	save_file.close()
 
 func load_game():
+	print("loading game")
 	if not FileAccess.file_exists(SAVE_FILE):
 		print("no save, using defaults")
 		is_first_gameplay = true
@@ -150,19 +152,6 @@ func get_next_dialogue_branch() -> String:
 
 # debug
 func force_save():
-	save_game()
-	
-func finalize_score(final_score: int, is_game_over: bool):
-	if selected_track.is_empty():
-		printerr("error: cannot finalize score, no track selected.")
-		return
-	
-	var track_key = selected_track.get_file().to_lower().trim_suffix(".mp3")
-	
-	if final_score > high_scores.get(track_key, 0):
-		high_scores[track_key] = final_score
-		print("new high score saved for ", track_key, ": ", final_score)
-	
 	save_game()
 
 	mark_gameplay_completed()
