@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvsnsfwy3p64t"]
+
+[ext_resource type="Script" uid="uid://c0ts7d10bghvs" path="res://scripts/ui/cutscene.gd" id="1_edmg7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_edmg7"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="Cutscene" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_edmg7")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1159.0
+offset_bottom = 648.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_edmg7")
+
+[node name="Image" type="TextureRect" parent="."]
+offset_left = -6.0
+offset_top = -72.0
+offset_right = 1168.0
+offset_bottom = 718.0
+mouse_filter = 2
+expand_mode = 3
+
+[node name="Timer" type="Timer" parent="."]

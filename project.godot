@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="out-perform"
-run/main_scene="uid://b6ydsimjiibv"
+run/main_scene="uid://dvsnsfwy3p64t"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
 [audio]
