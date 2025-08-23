@@ -29,6 +29,7 @@ var current_score: int = 0
 var high_score: int = 0
 var spectrum: AudioEffectInstance
 var current_track_color: Color = Color.WHITE
+var audio_finished_processing = false
 var last_arrow_time: float = 0
 var effect_index: int = -1
 var flash_layer
@@ -125,7 +126,33 @@ func fade_out_instructions():
 
 # upon track end
 func _on_audio_finished():
+	# Prevent multiple executions
+	if audio_finished_processing:
+		print("already processing audio finished, ignoring")
+		return
+	
+	audio_finished_processing = true
+	print("processing audio finished")
+	
+	if GameManager.is_first_gameplay:
+		print("first gameplay done")
+		audio_player.stop()
+		arrow_cooldown = base_arrow_cooldown
+		audio_player.pitch_scale = 1
+		
+		await get_tree().create_timer(1.0).timeout
+		save_high_score()
+		strikes = 5
+		GameManager.mark_gameplay_completed()
+		
+		print("first gameplay")
+		GameManager.is_first_gameplay = false
+		SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
+		return
+	
 	if strikes != 0:
+		# Reset the flag for repeat attempts
+		audio_finished_processing = false
 		arrow_cooldown = arrow_cooldown * 0.8
 		audio_player.pitch_scale = audio_player.pitch_scale * 1.2
 		audio_player.play()
@@ -135,9 +162,10 @@ func _on_audio_finished():
 		arrow_cooldown = base_arrow_cooldown
 		audio_player.pitch_scale = 1
 		
+		print("game over scene")
 		var game_over_scene = preload("res://scenes/game_over.tscn").instantiate()
 		add_child(game_over_scene)
-
+		
 		# overlay
 		game_over_scene.fade_in(1.0)
 		await get_tree().create_timer(1.0).timeout
@@ -149,8 +177,10 @@ func _on_audio_finished():
 		GameManager.mark_gameplay_completed()
 		
 		if GameManager.get_times_played() == 1:
+			print("played one time, going to dialogue scene")
 			SceneTransition.change_scene_to("res://scenes/dialogue.tscn")
 		else:
+			print("played > one time, going to track menu scene")
 			SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
 
 # beat detection + arrow spawning

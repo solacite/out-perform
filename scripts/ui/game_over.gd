@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var game_over_label: RichTextLabel = $GameOver
 
 func fade_in(duration := 1.0):
+	print("fading game over in")
 	overlay.modulate.a = 0.0
 	game_over_label.modulate.a = 0.0
 
@@ -12,6 +13,7 @@ func fade_in(duration := 1.0):
 	tween.tween_property(game_over_label, "modulate:a", 1.0, duration)
 
 func fade_out(duration := 1.0):
+	print("fading game over out")
 	overlay.modulate.a = 0.8
 	game_over_label.modulate.a = 1.0
 

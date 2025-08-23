@@ -10,6 +10,7 @@ var has_played: bool = false
 var intro_completed: bool = false
 var second_intro_completed: bool = false
 var selected_track: String = ""
+var is_first_gameplay: bool = true
 
 # initialization
 func _ready():
@@ -46,6 +47,7 @@ func save_game():
 func load_game():
 	if not FileAccess.file_exists(SAVE_FILE):
 		print("no save, using defaults")
+		is_first_gameplay = true
 		return
 	var save_file := FileAccess.open(SAVE_FILE, FileAccess.READ)
 	if save_file == null:
