@@ -55,6 +55,7 @@ func _ready():
 	total_arrows_hit = 0
 	current_combo = 0
 	best_combo = 0
+	arrow_cooldown = base_arrow_cooldown
 	
 	update_strikes()
 	setup_instructions()
@@ -145,6 +146,7 @@ func handle_round_end():
 		show_instructions_with_speed_message()
 		audio_finished_processing = false
 		audio_player.pitch_scale *= 1.2
+		arrow_cooldown -= 0.05
 		audio_player.play()
 		await get_tree().create_timer(1.0).timeout
 
