@@ -64,7 +64,7 @@ func _ready():
 	start_dialogue()
 
 func start_dialogue():
-	MusicManager.play_music("res://audio/dialogue music.mp3")
+	MusicManager.play_music("res://audio/dialogue music.mp3", true)
 	var dialogue_branch = GameManager.get_next_dialogue_branch()
 	var dialogue_data
 	

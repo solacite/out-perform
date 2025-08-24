@@ -9,7 +9,7 @@ var is_image_1_active = true
 var timer: Timer
 
 func _ready():
-	MusicManager.play_music("res://audio/game over.mp3")
+	MusicManager.play_music("res://audio/game over.mp3", false)
 	
 	game_over_image.texture = game_over_1_texture
 	

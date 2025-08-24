@@ -17,4 +17,4 @@ func go_to_gameplay():
 # runs automatically upon scene load
 func _ready():
 	print("playing lobby music")
-	MusicManager.play_music("res://audio/lobby.mp3")
+	MusicManager.play_music("res://audio/lobby.mp3", true)
