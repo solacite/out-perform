@@ -234,13 +234,13 @@ func check_and_remove_arrow(direction: String):
 			total_arrows_hit += 1
 			current_combo += 1
 			
-			# Check if the current combo is a new best combo
+			# check if the current combo is a new best combo
 			if current_combo > best_combo:
 				best_combo = current_combo
 			
 			update_score_display()
 				
-			# Ssawn a message every 10 combo hits
+			# spawn a message every 10 combo hits
 			if current_combo % 5 == 0:
 				var current_track_color = Color.WHITE
 				match GameManager.selected_track.get_file():
@@ -283,7 +283,6 @@ func check_and_remove_arrow(direction: String):
 					tween.kill()
 			
 			arrow.queue_free()
-			update_score_display()
 			return
 	
 	# reset score if no existing arrows that match
@@ -293,8 +292,6 @@ func check_and_remove_arrow(direction: String):
 	elif strikes == 0:
 		_on_audio_finished()
 	update_strikes()
-	
-	total_arrows_hit = 0
 	update_score_display()
 
 func arrow_missed(arrow):
@@ -308,6 +305,7 @@ func arrow_missed(arrow):
 		elif strikes == 0:
 			_on_audio_finished()
 		update_strikes()
+		update_score_display()
 
 # handle score
 func update_score_display():
@@ -319,6 +317,7 @@ func update_score_display():
 	if total_arrows_hit > GameManager.high_scores.get(track_key, 0):
 		GameManager.high_scores[track_key] = total_arrows_hit
 		GameManager.save_game()
+		high_score = total_arrows_hit
 	
 	var current_high_score = GameManager.high_scores.get(track_key, 0)
 	
