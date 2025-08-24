@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://co3urqjbjfgdu"]
+[gd_scene load_steps=7 format=3 uid="uid://co3urqjbjfgdu"]
 
 [ext_resource type="Texture2D" uid="uid://dkjigos81r7bp" path="res://assets/dialogue/border_chat_box.png" id="1_bfpow"]
 [ext_resource type="Script" uid="uid://dtppe7wxi7rht" path="res://scripts/ui/chat_box.gd" id="2_fyky8"]
 [ext_resource type="FontFile" uid="uid://3npgvibwus8" path="res://fonts/FingerPaint-Regular.ttf" id="3_bfpow"]
+[ext_resource type="AudioStream" uid="uid://dkhyjw61i06di" path="res://audio/dialogue.mp3" id="4_fyky8"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fyky8"]
 
@@ -43,3 +44,8 @@ text = "ahhhhhhh"
 fit_content = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Speech" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_fyky8")
+volume_db = -20.975
+bus = &"Dialogue"

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ci4jn73kkcvfx"
+path="res://.godot/imported/dialogue music.mp3-258edabbbc658b291bd8b8f06945068b.mp3str"
+
+[deps]
+
+source_file="res://audio/dialogue music.mp3"
+dest_files=["res://.godot/imported/dialogue music.mp3-258edabbbc658b291bd8b8f06945068b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

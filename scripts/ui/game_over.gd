@@ -9,6 +9,8 @@ var is_image_1_active = true
 var timer: Timer
 
 func _ready():
+	MusicManager.play_music("res://audio/game over.mp3")
+	
 	game_over_image.texture = game_over_1_texture
 	
 	timer = Timer.new()

@@ -66,7 +66,7 @@ func _ready():
 
 # audio setup
 func setup_audio():
-	MusicManager.stop_lobby_music()
+	MusicManager.stop_music()
 	
 	# check if audio player exists
 	if audio_player == null:

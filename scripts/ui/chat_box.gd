@@ -2,6 +2,7 @@
 extends Panel
 
 @onready var text_label: RichTextLabel = $Dialogue
+@onready var speech_sound: AudioStreamPlayer2D = $"../Speech"
 
 # dialogue dictionary
 var dialogues = {
@@ -49,6 +50,7 @@ var current_index := 0
 var dialogue_finished := false
 var typing := false
 var typing_speed := 0.03
+var input_locked := false
 
 func _ready():
 	# make dialogue box visible + don't track clicks from label
@@ -62,6 +64,7 @@ func _ready():
 	start_dialogue()
 
 func start_dialogue():
+	MusicManager.play_music("res://audio/dialogue music.mp3")
 	var dialogue_branch = GameManager.get_next_dialogue_branch()
 	var dialogue_data
 	
@@ -78,8 +81,9 @@ func start_dialogue():
 	dialogue_finished = false
 	call_deferred("show_next_line")
 
-
 func show_next_line():
+	if input_locked:
+		return
 	if current_index < current_sequence.size():
 		start_typing(current_sequence[current_index])
 	else:
@@ -87,36 +91,39 @@ func show_next_line():
 
 func start_typing(line: String) -> void:
 	typing = true
+	input_locked = true
 	text_label.text = ""
-	
+
 	await get_tree().process_frame
-	
-	for i in range(line.length()):
+
+	var words = line.split(" ")
+
+	for word in words:
 		if not typing:
 			text_label.text = line
 			break
-		
-		var char = line[i]
-		text_label.text += char
-		
-		var delay = typing_speed
-		
-		match char:
-			",":
-				delay += 0.15  # short pause
-			".", "!", "?":
-				delay += 0.3   # longer pause
-		
+
+		text_label.text += word + " "
+		play_speech_sound_middle()
+
+		var delay = 0.15 + (word.length() * 0.02)
+		if word.ends_with(","):
+			delay += 0.15
+		elif word.ends_with(".") or word.ends_with("!") or word.ends_with("?"):
+			delay += 0.3
+
 		await get_tree().create_timer(delay).timeout
-	
+
 	typing = false
 	current_index += 1
+	input_locked = false
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if typing:
+			# click skips current line
 			typing = false
-		else:
+		elif not input_locked:
 			show_next_line()
 
 # post-dialogue
@@ -131,3 +138,48 @@ func handle_dialogue_completion():
 		SceneTransition.change_scene_to(dialogues["after_intro"]["next_scene"])
 	else:
 		SceneTransition.change_scene_to("res://scenes/track_menu.tscn")
+
+func play_speech_sound():
+	if not speech_sound.stream:
+		return
+
+	# random pitch
+	speech_sound.pitch_scale = randf_range(0.9, 1.2)
+
+	# restart the sound if still playing
+	if speech_sound.playing:
+		speech_sound.stop()
+
+	print("playing speech sound! NOW")
+	speech_sound.play()
+
+	# cut off quickly so it matches "syllable/char length"
+	var cutoff_time = 1
+	get_tree().create_timer(cutoff_time).timeout.connect(func():
+		if speech_sound.playing:
+			speech_sound.stop()
+	)
+	
+func play_speech_sound_middle():
+	if not speech_sound.stream:
+		return
+
+	speech_sound.pitch_scale = randf_range(0.9, 1.2)
+
+	var total_length = speech_sound.stream.get_length()
+	var middle_start = total_length * 0.25
+	var middle_end = total_length * 0.75
+	var random_start = randf_range(middle_start, middle_end - 0.1)
+
+	if speech_sound.playing:
+		speech_sound.stop()
+
+	speech_sound.seek(random_start)
+	speech_sound.play()
+
+	var cutoff_time := 0.15
+	var timer = get_tree().create_timer(cutoff_time)
+	timer.timeout.connect(func():
+		if speech_sound.playing:
+			speech_sound.stop()
+	)

@@ -34,6 +34,7 @@ var cutscene_frames = [
 var current_frame_index = 0
 
 func _ready():
+	MusicManager.play_music("res://audio/intro.mp3")
 	$Background.visible = true
 	timer.timeout.connect(_on_frame_timer_timeout)
 	start_cutscene()

@@ -16,7 +16,7 @@ signal round_ended
 
 # initialization
 func _ready():
-	#clear_save_file()
+	clear_save_file()
 	load_game()
 	
 	print("game manager debug on startup")

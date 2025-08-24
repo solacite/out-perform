@@ -17,7 +17,7 @@ var track_map := {
 
 # runs automatically
 func _ready():
-	MusicManager.play_lobby_music()
+	MusicManager.play_music("res://audio/dialogue_music.mp3")
 	print("track menu is playing lobby msuic")
 	GameManager.round_ended.connect(update_track_labels)
 	update_track_labels()
