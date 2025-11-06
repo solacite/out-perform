@@ -48,4 +48,3 @@ fit_content = true
 [node name="Speech" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_fyky8")
 volume_db = -20.975
-bus = &"Dialogue"
